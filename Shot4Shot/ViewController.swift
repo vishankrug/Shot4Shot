@@ -42,7 +42,8 @@ class ViewController: UIViewController {
         //update data
 //        fire.child("vishankrug/numberOfDrinksAllowed").setValue(20)
         
-
+        //deleting data
+//        fire.child("vishankrug").removeValue()
     }
 
 
