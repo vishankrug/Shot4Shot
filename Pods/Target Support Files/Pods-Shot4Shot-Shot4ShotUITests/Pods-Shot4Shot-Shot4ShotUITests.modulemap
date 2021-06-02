@@ -1,0 +1,6 @@
+framework module Pods_Shot4Shot_Shot4ShotUITests {
+  umbrella header "Pods-Shot4Shot-Shot4ShotUITests-umbrella.h"
+
+  export *
+  module * { export * }
+}
