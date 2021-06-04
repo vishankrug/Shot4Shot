@@ -7,6 +7,8 @@
 
 import UIKit
 import FirebaseDatabase
+import FirebaseAuth
+import FirebaseUI
 
 class ViewController: UIViewController {
 
@@ -18,19 +20,20 @@ class ViewController: UIViewController {
         
         //code to add to firebase -- must be in the format
         //will run everytime app is opened so I'll comment it out
-//        fire.child("vishankrug").setValue([
-//            "username": "vishankrug",
-//            "fname": "Vishank",
-//            "lname": "Rughwani",
-//            "birthday": "06-01-2000",
+//        fire.child("ss299").setValue([
+//            "username": "ss299",
+//            "fname": "Saurav",
+//            "lname": "Sawansukha",
+//            "birthday": "07-25-2000",
 //            "sex": "male",
-//            "height": 6.0,
-//            "weight": 188,
-//            "emergencyContact": "2067790600",
-//            "numberOfDrinksAllowed": 10,
-//            "history": ["06-01-2021": ["vodka": 10, "whiksey": 10], "06-02-2021": ["jager": 10]],
-//            "bloodAlcForDay": 0.05
+//            "height": 5.11,
+//            "weight": 170,
+//            "emergencyContact": "2069027455",
+//            "numberOfDrinksAllowed": 20,
+//            "history": ["06-01-2021": ["vodka": 28, "whiksey": 19], "06-02-2021": ["jager": 2]],
+//            "bloodAlcForDay": 0.10
 //        ])
+//        print("hello")
         
         //reading data
 //        fire.child("vishankrug").observeSingleEvent(of: .value)
@@ -45,7 +48,38 @@ class ViewController: UIViewController {
         //deleting data
 //        fire.child("vishankrug").removeValue()
     }
-
+    
+    
+    @IBAction func Login(_ sender: Any) {
+        
+        let authUI = FUIAuth.defaultAuthUI()
+        
+        guard authUI != nil else {
+            return
+        }
+        
+        authUI?.delegate = self
+        
+        let authViewController = authUI!.authViewController()
+        
+        present(authViewController, animated: true, completion: nil)
+        
+    }
+    
 
 }
 
+extension ViewController: FUIAuthDelegate {
+    func authUI(_ authUI: FUIAuth, didSignInWith authDataResult: AuthDataResult?, error: Error?) {
+        
+        if error != nil {
+            return
+        }
+        //Getting userID
+        //authDataResult?.user.uid
+        
+        performSegue(withIdentifier: "loginsegue", sender: self)
+        
+        
+    }
+}

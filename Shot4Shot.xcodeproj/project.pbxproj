@@ -185,6 +185,7 @@
 				14785DF22666FC2400F64E5A /* Frameworks */,
 				14785DF32666FC2400F64E5A /* Resources */,
 				BF091D26D80FC18AFA72DB5D /* [CP] Embed Pods Frameworks */,
+				EECCA5C87962B332423BD702 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -223,6 +224,7 @@
 				14785E132666FC2D00F64E5A /* Frameworks */,
 				14785E142666FC2D00F64E5A /* Resources */,
 				5ED8825B60F7B808643A86F0 /* [CP] Embed Pods Frameworks */,
+				FE854B003A15E2F29BD545E7 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -405,6 +407,40 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Shot4Shot/Pods-Shot4Shot-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		EECCA5C87962B332423BD702 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Shot4Shot/Pods-Shot4Shot-resources-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Copy Pods Resources";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Shot4Shot/Pods-Shot4Shot-resources-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Shot4Shot/Pods-Shot4Shot-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		FE854B003A15E2F29BD545E7 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Shot4Shot-Shot4ShotUITests/Pods-Shot4Shot-Shot4ShotUITests-resources-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Copy Pods Resources";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Shot4Shot-Shot4ShotUITests/Pods-Shot4Shot-Shot4ShotUITests-resources-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Shot4Shot-Shot4ShotUITests/Pods-Shot4Shot-Shot4ShotUITests-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */

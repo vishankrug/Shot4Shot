@@ -18,7 +18,8 @@ target 'Shot4Shot' do
 
   pod 'Firebase/Core'
   pod 'Firebase/Database'
-pod 'Charts'
+  pod 'FirebaseUI/Auth'
+  pod 'Charts'
 
 
 end
