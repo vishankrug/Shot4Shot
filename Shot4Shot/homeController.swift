@@ -7,10 +7,13 @@
 
 
 import UIKit
+import FirebaseDatabase
 
-class HomeViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource, UITextFieldDelegate {
+
+class homeController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource, UITextFieldDelegate {
     
-    
+    let fire = Database.database().reference()
+
     var alcohol = [
         [
             "name": "wine",
@@ -230,30 +233,31 @@ class HomeViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDa
 
         print(type(of: alcohol[2]["standardDrinkoz"]!))
         
-        if (valueSelected == "beer") {
-            standardDrinks = Double(numberOunces) / (alcohol[2]["standardDrinkoz"]!)
-        } else if (valueSelected == "wine") {
-            standardDrinks = numberOunces / (alcohol[0]["standardDrinkoz"]!)
-        } else if (valueSelected == "vodka") {
-            standardDrinks = numberOunces / (alcohol[1]["standardDrinkoz"]!)
-        } else if (valueSelected == "malt-liquor") {
-            standardDrinks = numberOunces / (alcohol[3]["standardDrinkoz"]!)
-        } else if (valueSelected == "rum") {
-            standardDrinks = numberOunces / (alcohol[4]["standardDrinkoz"]!)
-        } else if (valueSelected == "gin") {
-            standardDrinks = numberOunces / (alcohol[5]["standardDrinkoz"]!)
-        } else if (valueSelected == "tequila") {
-            standardDrinks = numberOunces / (alcohol[6]["standardDrinkoz"]!)
-        }
+//        if (valueSelected == "beer") {
+//            standardDrinks = Double(numberOunces) / (alcohol[2]["standardDrinkoz"]!)
+//        } else if (valueSelected == "wine") {
+//            standardDrinks = numberOunces / (alcohol[0]["standardDrinkoz"]!)
+//        } else if (valueSelected == "vodka") {
+//            standardDrinks = numberOunces / (alcohol[1]["standardDrinkoz"]!)
+//        } else if (valueSelected == "malt-liquor") {
+//            standardDrinks = numberOunces / (alcohol[3]["standardDrinkoz"]!)
+//        } else if (valueSelected == "rum") {
+//            standardDrinks = numberOunces / (alcohol[4]["standardDrinkoz"]!)
+//        } else if (valueSelected == "gin") {
+//            standardDrinks = numberOunces / (alcohol[5]["standardDrinkoz"]!)
+//        } else if (valueSelected == "tequila") {
+//            standardDrinks = numberOunces / (alcohol[6]["standardDrinkoz"]!)
+//        }
 
         
         
         fire.child(username).observeSingleEvent(of: .value)
                 { (snapshot) in
-                    let data = snapshot.value as? [String: Any]
+                    let data = (snapshot.value as? [String: Any])!
 
-            let history = data["history"][currDate]
-            temp = history[valueSelected]
+            let history = data["history"] as! [String: Any]
+            let currDates = history[self.currDate] as! [String: Int]
+            temp = Double(currDates[self.valueSelected]!)
         }
 
 
@@ -267,27 +271,31 @@ class HomeViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDa
         
         fire.child(username).observeSingleEvent(of: .value)
                 { (snapshot) in
-                    let data = snapshot.value as? [String: Any]
+            let data = (snapshot.value as? [String: Any])!
 
-            let history = data["history"][currDate]
+            var history = data["history"] as! [String: Any]
+            history = history[self.currDate] as! [String: Int]
             
             
-            for hist in history {
-                if (hist == "beer") {
-                    numGrams = numGrams + (alcohol[2]["standardDrinkgrams"]!) * history[hist]
-                } else if (hist == "wine") {
-                    numGrams = numGrams + (alcohol[0]["standardDrinkgrams"]!) * history[hist]
-                } else if (hist == "vodka") {
-                    numGrams = numGrams + (alcohol[1]["standardDrinkgrams"]!) * history[hist]
-                } else if (hist == "malt-liquor") {
-                    numGrams = numGrams + (alcohol[3]["standardDrinkgrams"]!) * history[hist]
-                } else if (hist == "rum") {
-                    numGrams = numGrams + (alcohol[4]["standardDrinkgrams"]!) * history[hist]
-                } else if (hist == "gin") {
-                    numGrams = numGrams + (alcohol[5]["standardDrinkgrams"]!) * history[hist]
-                } else if (hist == "tequila") {
-                    numGrams = numGrams + (alcohol[6]["standardDrinkgrams"]!) * history[hist]
-                }
+            for x in history {
+                var hist = x as! String
+                print(history[hist])
+                print(self.alcohol[2]["standardDrinkgrams"])
+//                if (hist == "beer") {
+//                    numGrams = numGrams + (alcohol[2]["standardDrinkgrams"]!) * history[hist]
+//                } else if (hist == "wine") {
+//                    numGrams = numGrams + (alcohol[0]["standardDrinkgrams"]!) * history[hist]
+//                } else if (hist == "vodka") {
+//                    numGrams = numGrams + (alcohol[1]["standardDrinkgrams"]!) * history[hist]
+//                } else if (hist == "malt-liquor") {
+//                    numGrams = numGrams + (alcohol[3]["standardDrinkgrams"]!) * history[hist]
+//                } else if (hist == "rum") {
+//                    numGrams = numGrams + (alcohol[4]["standardDrinkgrams"]!) * history[hist]
+//                } else if (hist == "gin") {
+//                    numGrams = numGrams + (alcohol[5]["standardDrinkgrams"]!) * history[hist]
+//                } else if (hist == "tequila") {
+//                    numGrams = numGrams + (alcohol[6]["standardDrinkgrams"]!) * history[hist]
+//                }
             }
         }
         
@@ -302,8 +310,8 @@ class HomeViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDa
         { (snapshot) in
             let data = snapshot.value as? [String: Any]
 
-            sex = data["sex"]
-            weight = data["weight"]
+            sex = data?["sex"] as! String
+            weight = data?["weight"] as! Double
 
             if (sex == "female") {
                 rConstant = 0.55
