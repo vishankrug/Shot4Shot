@@ -11,12 +11,12 @@ import FirebaseAuth
 import FirebaseUI
 
 class ViewController: UIViewController {
+    
+    let fire = Database.database().reference()
 
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
-        
-        let fire = Database.database().reference()
         
         //code to add to firebase -- must be in the format
         //will run everytime app is opened so I'll comment it out
