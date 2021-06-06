@@ -1,23 +1,62 @@
 //
-//  homeController.swift
-//  Shot4Shot
-//
-//  Created by Pragyna Naik on 6/4/21.
-//
-
-import Foundation
-
-//
 //  ViewController.swift
 //  inputScreen
 //
 //  Created by Pragyna Naik on 5/31/21.
 //
 
+
 import UIKit
 
-class homeController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource, UITextFieldDelegate {
+class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource, UITextFieldDelegate {
     
+    
+    var alcohol = [
+        [
+            "name": "wine",
+            "alcoholPercent": 0.12,
+            "standardDrinkoz": 5.0,
+            "standardDrinkgrams": 141.748
+        ],
+        [
+            "name": "vodka",
+            "alcoholPercent": 0.4,
+            "standardDrinkoz": 1.5,
+            "standardDrinkgrams": 130
+        ],
+        [
+            "name": "beer",
+            "alcoholPercent": 0.05,
+            "standardDrinkoz": 12.0,
+            "standardDrinkgrams": 340.194
+            
+        ],
+        [
+            "name": "malt-liquor",
+            "alcoholPercent": 0.07,
+            "standardDrinkoz": 8.0,
+            "standardDrinkgrams": 226.796
+        ],
+        [
+            "name": "rum",
+            "alcoholPercent": 0.4,
+            "standardDrinkoz": 1.5,
+            "standardDrinkgrams": 42.5243
+        ],
+        [
+            "name": "gin",
+            "alcoholPercent": 0.4,
+            "standardDrinkoz": 1.5,
+            "standardDrinkgrams": 42.5243
+        ],
+        [
+            "name": "tequila",
+            "alcoholPercent": 0.4,
+            "standardDrinkoz": 1.5,
+            "standardDrinkgrams": 42.5243
+        ]
+    ]
+
     var numberShots = 0
     var numberCups = 0
     var username = "vishankrug"
@@ -27,6 +66,7 @@ class homeController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
     var numGrams = 0
     var currDate = ""
     var valueSelected = ""
+    var bac = 0.0
     
     struct alcData: Codable {
         let name: String
@@ -164,7 +204,7 @@ class homeController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
     // Updates all variables when save drinks is clicked
     @IBAction func saveDrinks(_ sender: Any) {
         currentDate()
-      //  sendData()
+        sendData()
      //   convertGrams()
     //    calcBAC()
      //   updateLabels()
@@ -179,61 +219,103 @@ class homeController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
         currDate = dateFormatter.string(from: date)
     }
     
-//    func sendData() {
-//        var standardDrinks = 0.0
-//        let shotOunces = 1.5
-//        let cupOunces = 12.0
-//        var temp = 0.0
-//
-//
-//        standardDrinks = ((shotOunces * Double(numberShots)) + (cupOunces * Double(numberCups)))/6
-//
-//        fire.child(username).observeSingleEvent(of: .value)
-//                { (snapshot) in
-//                    let data = snapshot.value as? [String: Any]
-//
-//            let history = data["history"][currDate]
-//            temp = history[valueSelected]
+    func sendData() {
+        var standardDrinks = 0.0
+        let shotOunces = 1.5
+        let cupOunces = 12.0
+        var temp = 0.0
+        
+
+        let numberOunces = ((shotOunces * Double(numberShots)) + (cupOunces * Double(numberCups)))
+
+        print(type(of: alcohol[2]["standardDrinkoz"]!))
+        
+//        if (valueSelected == "beer") {
+//            standardDrinks = Double(numberOunces) / (alcohol[2]["standardDrinkoz"]!)
+//        } else if (valueSelected == "wine") {
+//            standardDrinks = numberOunces / (alcohol[2]["standardDrinkoz"]!)
+//        } else if (valueSelected == "vodka") {
+//            standardDrinks = numberOunces / (alcohol[2]["standardDrinkoz"]!)
+//        } else if (valueSelected == "malt-liquor") {
+//            standardDrinks = numberOunces / (alcohol[2]["standardDrinkoz"]!)
+//        } else if (valueSelected == "rum") {
+//            standardDrinks = numberOunces / (alcohol[2]["standardDrinkoz"]!)
+//        } else if (valueSelected == "gin") {
+//            standardDrinks = numberOunces / (alcohol[2]["standardDrinkoz"]!)
+//        } else if (valueSelected == "tequila") {
+//            standardDrinks = numberOunces / (alcohol[2]["standardDrinkoz"]!)
 //        }
-//
-//
-//        let historyName = username + "history"
-//
-//        fire.child(historyName).setValue(temp)
-//    }
+
+        
+        
+        fire.child(username).observeSingleEvent(of: .value)
+                { (snapshot) in
+                    let data = snapshot.value as? [String: Any]
+
+            let history = data["history"][currDate]
+            temp = history[valueSelected]
+        }
+
+
+        let historyName = username + "history"
+
+        fire.child(historyName).setValue(temp)
+    }
     
     func convertGrams() {
         
+        fire.child(username).observeSingleEvent(of: .value)
+                { (snapshot) in
+                    let data = snapshot.value as? [String: Any]
+
+            let history = data["history"][currDate]
+            
+            
+            for hist in history {
+                
+            }
+        }
+        
     }
     
-//    func calcBAC() {
-//        var sex = ""
-//        var weight = 0
-//        var rConstant = 0
-//
-//        fire.child(username).observeSingleEvent(of: .value)
-//        { (snapshot) in
-//            let data = snapshot.value as? [String: Any]
-//
-//            sex = data["sex"]
-//            weight = data["weight"]
-//
-//            if (sex == "female") {
-//                rConstant = 0.55
-//            } else {
-//                rConstant = 0.68
-//            }
-//        }
-//
-//        var bac = (numGrams / (weight * rConstant)) * 100
-//
-//        let bacSet = username + "bloodAlcForDay"
-//
-//        fire.child(bacSet).setValue(bac)
-//    }
+    func calcBAC() {
+        var sex = ""
+        var weight = 0
+        var rConstant = 0
+
+        fire.child(username).observeSingleEvent(of: .value)
+        { (snapshot) in
+            let data = snapshot.value as? [String: Any]
+
+            sex = data["sex"]
+            weight = data["weight"]
+
+            if (sex == "female") {
+                rConstant = 0.55
+            } else {
+                rConstant = 0.68
+            }
+        }
+
+        bac = (numGrams / (weight * rConstant)) * 100
+
+        let bacSet = username + "bloodAlcForDay"
+
+        fire.child(bacSet).setValue(bac)
+    }
     
     
     func updateLabels() {
+        BAC.text = String(bac)
+        if (bac != 0.0) {
+            if (bac < 0.08) {
+                state.text = "Legally Intoxicated"
+            } else if (bac < 0.40) {
+                state.text = "Very Impaired"
+            } else {
+                state.text = "Serious Complications"
+            }
+        }
         
     }
     
