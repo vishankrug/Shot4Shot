@@ -51,35 +51,35 @@ class ViewController: UIViewController {
     
     
     @IBAction func Login(_ sender: Any) {
-        
-        let authUI = FUIAuth.defaultAuthUI()
-        
-        guard authUI != nil else {
-            return
-        }
-        
-        authUI?.delegate = self
-        
-        let authViewController = authUI!.authViewController()
-        
-        present(authViewController, animated: true, completion: nil)
+//
+//        let authUI = FUIAuth.defaultAuthUI()
+//
+//        guard authUI != nil else {
+//            return
+//        }
+//
+//        authUI?.delegate = self
+//
+//        let authViewController = authUI!.authViewController()
+//        
+//        present(authViewController, animated: true, completion: nil)
         
     }
     
 
 }
 
-extension ViewController: FUIAuthDelegate {
-    func authUI(_ authUI: FUIAuth, didSignInWith authDataResult: AuthDataResult?, error: Error?) {
-        
-        if error != nil {
-            return
-        }
-        //Getting userID
-        //authDataResult?.user.uid
-        
-        performSegue(withIdentifier: "loginsegue", sender: self)
-        
-        
-    }
-}
+//extension ViewController: FUIAuthDelegate {
+//    func authUI(_ authUI: FUIAuth, didSignInWith authDataResult: AuthDataResult?, error: Error?) {
+//
+//        if error != nil {
+//            return
+//        }
+//        //Getting userID
+//        //authDataResult?.user.uid
+//
+//        //performSegue(withIdentifier: "loginsegue", sender: self)
+//
+//
+//    }
+//}
