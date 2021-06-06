@@ -63,7 +63,7 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
     var typeContainer = "Cups"
     var images = [UIImage]()
     var list: [String] = [String]()
-    var numGrams = 0
+    var numGrams = 0.0
     var currDate = ""
     var valueSelected = ""
     var bac = 0.0
@@ -205,10 +205,10 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
     @IBAction func saveDrinks(_ sender: Any) {
         currentDate()
         sendData()
-     //   convertGrams()
-    //    calcBAC()
-     //   updateLabels()
-    //    resetInfo()
+        convertGrams()
+        calcBAC()
+        updateLabels()
+        resetInfo()
     }
     
     
@@ -230,21 +230,21 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
 
         print(type(of: alcohol[2]["standardDrinkoz"]!))
         
-//        if (valueSelected == "beer") {
-//            standardDrinks = Double(numberOunces) / (alcohol[2]["standardDrinkoz"]!)
-//        } else if (valueSelected == "wine") {
-//            standardDrinks = numberOunces / (alcohol[2]["standardDrinkoz"]!)
-//        } else if (valueSelected == "vodka") {
-//            standardDrinks = numberOunces / (alcohol[2]["standardDrinkoz"]!)
-//        } else if (valueSelected == "malt-liquor") {
-//            standardDrinks = numberOunces / (alcohol[2]["standardDrinkoz"]!)
-//        } else if (valueSelected == "rum") {
-//            standardDrinks = numberOunces / (alcohol[2]["standardDrinkoz"]!)
-//        } else if (valueSelected == "gin") {
-//            standardDrinks = numberOunces / (alcohol[2]["standardDrinkoz"]!)
-//        } else if (valueSelected == "tequila") {
-//            standardDrinks = numberOunces / (alcohol[2]["standardDrinkoz"]!)
-//        }
+        if (valueSelected == "beer") {
+            standardDrinks = Double(numberOunces) / (alcohol[2]["standardDrinkoz"]!)
+        } else if (valueSelected == "wine") {
+            standardDrinks = numberOunces / (alcohol[0]["standardDrinkoz"]!)
+        } else if (valueSelected == "vodka") {
+            standardDrinks = numberOunces / (alcohol[1]["standardDrinkoz"]!)
+        } else if (valueSelected == "malt-liquor") {
+            standardDrinks = numberOunces / (alcohol[3]["standardDrinkoz"]!)
+        } else if (valueSelected == "rum") {
+            standardDrinks = numberOunces / (alcohol[4]["standardDrinkoz"]!)
+        } else if (valueSelected == "gin") {
+            standardDrinks = numberOunces / (alcohol[5]["standardDrinkoz"]!)
+        } else if (valueSelected == "tequila") {
+            standardDrinks = numberOunces / (alcohol[6]["standardDrinkoz"]!)
+        }
 
         
         
@@ -262,6 +262,7 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
         fire.child(historyName).setValue(temp)
     }
     
+    
     func convertGrams() {
         
         fire.child(username).observeSingleEvent(of: .value)
@@ -272,7 +273,21 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
             
             
             for hist in history {
-                
+                if (hist == "beer") {
+                    numGrams = numGrams + (alcohol[2]["standardDrinkgrams"]!) * history[hist]
+                } else if (hist == "wine") {
+                    numGrams = numGrams + (alcohol[0]["standardDrinkgrams"]!) * history[hist]
+                } else if (hist == "vodka") {
+                    numGrams = numGrams + (alcohol[1]["standardDrinkgrams"]!) * history[hist]
+                } else if (hist == "malt-liquor") {
+                    numGrams = numGrams + (alcohol[3]["standardDrinkgrams"]!) * history[hist]
+                } else if (hist == "rum") {
+                    numGrams = numGrams + (alcohol[4]["standardDrinkgrams"]!) * history[hist]
+                } else if (hist == "gin") {
+                    numGrams = numGrams + (alcohol[5]["standardDrinkgrams"]!) * history[hist]
+                } else if (hist == "tequila") {
+                    numGrams = numGrams + (alcohol[6]["standardDrinkgrams"]!) * history[hist]
+                }
             }
         }
         
@@ -280,8 +295,8 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
     
     func calcBAC() {
         var sex = ""
-        var weight = 0
-        var rConstant = 0
+        var weight = 0.0
+        var rConstant = 0.0
 
         fire.child(username).observeSingleEvent(of: .value)
         { (snapshot) in
@@ -326,56 +341,56 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
         shotCounter.text = "0 shots"
     }
     
-    
-    // Reading data from JSON file
-    func readLocalFile(forName name: String) -> Data? {
-        do {
-            print("In read localFile")
-            if let bundlePath = Bundle.main.path(forResource: name,
-                                                 ofType: "json"),
-                let jsonData = try String(contentsOfFile: bundlePath).data(using: .utf8) {
-                return jsonData
-            }
-        } catch {
-            print(error)
-        }
-        
-        return nil
-    }
-    
-    func parse(jsonData: Data) {
-        do {
-            print("in parse Function")
-            let decodedData = try JSONDecoder().decode(alcData.self,
-                                                       from: jsonData)
-            
-            print(decodedData)
-            
-            
-            print("Name: ", decodedData.name)
-            print("grams: ", decodedData.standardDrinkgrams)
-            print("===================================")
-        } catch {
-            print("decode error")
-        }
-    }
-    
+//
+//    // Reading data from JSON file
+//    func readLocalFile(forName name: String) -> Data? {
+//        do {
+//            print("In read localFile")
+//            if let bundlePath = Bundle.main.path(forResource: name,
+//                                                 ofType: "json"),
+//                let jsonData = try String(contentsOfFile: bundlePath).data(using: .utf8) {
+//                return jsonData
+//            }
+//        } catch {
+//            print(error)
+//        }
+//
+//        return nil
+//    }
+//
+//    func parse(jsonData: Data) {
+//        do {
+//            print("in parse Function")
+//            let decodedData = try JSONDecoder().decode(alcData.self,
+//                                                       from: jsonData)
+//
+//            print(decodedData)
+//
+//
+//            print("Name: ", decodedData.name)
+//            print("grams: ", decodedData.standardDrinkgrams)
+//            print("===================================")
+//        } catch {
+//            print("decode error")
+//        }
+//    }
+//
 
 
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
         state.text = "Sober"
-        BAC.text = "0 %"
+        BAC.text = "0.0 BAC"
         self.drinkOptions.delegate = self
         self.drinkOptions.dataSource = self
         list = ["Vodka","Gin", "Tequila",
                 "Beer","Whiskey","Rum", "Wine"]
         
-        currentDate()
-        if let localData = self.readLocalFile(forName: "BAC") {
-            self.parse(jsonData: localData)
-        }
+
+//        if let localData = self.readLocalFile(forName: "BAC") {
+//            self.parse(jsonData: localData)
+//        }
     }
 
     
