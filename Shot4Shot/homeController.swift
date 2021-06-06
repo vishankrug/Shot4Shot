@@ -79,6 +79,8 @@ class homeController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
     }
     
     
+    
+    
     @IBOutlet weak var BAC: UILabel!
     @IBOutlet weak var state: UILabel!
     @IBOutlet weak var stateEmoji: UIImageView!
