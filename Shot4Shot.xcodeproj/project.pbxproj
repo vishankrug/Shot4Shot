@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		143BD2AC266C914F006728B5 /* SignUpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 143BD2AB266C914F006728B5 /* SignUpViewController.swift */; };
+		143BD2AE266C9275006728B5 /* LogInViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 143BD2AD266C9275006728B5 /* LogInViewController.swift */; };
 		14785DF92666FC2400F64E5A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14785DF82666FC2400F64E5A /* AppDelegate.swift */; };
 		14785DFB2666FC2400F64E5A /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14785DFA2666FC2400F64E5A /* SceneDelegate.swift */; };
 		14785DFD2666FC2400F64E5A /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14785DFC2666FC2400F64E5A /* ViewController.swift */; };
@@ -42,6 +44,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		143BD2AB266C914F006728B5 /* SignUpViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpViewController.swift; sourceTree = "<group>"; };
+		143BD2AD266C9275006728B5 /* LogInViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogInViewController.swift; sourceTree = "<group>"; };
 		14785DF52666FC2400F64E5A /* Shot4Shot.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Shot4Shot.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		14785DF82666FC2400F64E5A /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		14785DFA2666FC2400F64E5A /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -131,6 +135,8 @@
 				14B382E22666FFC5009C7E9A /* GoogleService-Info.plist */,
 				14785E062666FC2C00F64E5A /* Info.plist */,
 				F41DB8AE266B179B003C3C1C /* homeController.swift */,
+				143BD2AB266C914F006728B5 /* SignUpViewController.swift */,
+				143BD2AD266C9275006728B5 /* LogInViewController.swift */,
 			);
 			path = Shot4Shot;
 			sourceTree = "<group>";
@@ -455,8 +461,10 @@
 			files = (
 				F41DB8AF266B179B003C3C1C /* homeController.swift in Sources */,
 				14785DFD2666FC2400F64E5A /* ViewController.swift in Sources */,
+				143BD2AE266C9275006728B5 /* LogInViewController.swift in Sources */,
 				14785DF92666FC2400F64E5A /* AppDelegate.swift in Sources */,
 				14785DFB2666FC2400F64E5A /* SceneDelegate.swift in Sources */,
+				143BD2AC266C914F006728B5 /* SignUpViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
