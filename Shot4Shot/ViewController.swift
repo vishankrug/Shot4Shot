@@ -10,6 +10,12 @@ import FirebaseDatabase
 import FirebaseAuth
 import FirebaseUI
 
+// SET GLOBAL USER VARIABLE
+var currentUser = userInfo(fname: "NAME", lname: "", birth: "01-20-2000", sex: "", height: 0.0, weight: 0.0, age: 0, emergency: "SSSSS",
+                           address: "123 rooselvelt way seattle wa", number: "122222222")
+// USER WE ARE EDITING IN FIREBASE. Make surue to change!
+let USER : String = "vishankrug"
+
 class ViewController: UIViewController {
 
     override func viewDidLoad() {
@@ -20,7 +26,7 @@ class ViewController: UIViewController {
         
         //code to add to firebase -- must be in the format
         //will run everytime app is opened so I'll comment it out
-//        fire.child("ss299").setValue([
+//        fire.child("vishankrug").setValue([
 //            "username": "ss299",
 //            "fname": "Saurav",
 //            "lname": "Sawansukha",
