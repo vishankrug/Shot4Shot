@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource, UITextFieldDelegate {
+class homeController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource, UITextFieldDelegate {
     
     
     var alcohol = [
@@ -230,21 +230,21 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
 
         print(type(of: alcohol[2]["standardDrinkoz"]!))
         
-        if (valueSelected == "beer") {
-            standardDrinks = Double(numberOunces) / (alcohol[2]["standardDrinkoz"]!)
-        } else if (valueSelected == "wine") {
-            standardDrinks = numberOunces / (alcohol[0]["standardDrinkoz"]!)
-        } else if (valueSelected == "vodka") {
-            standardDrinks = numberOunces / (alcohol[1]["standardDrinkoz"]!)
-        } else if (valueSelected == "malt-liquor") {
-            standardDrinks = numberOunces / (alcohol[3]["standardDrinkoz"]!)
-        } else if (valueSelected == "rum") {
-            standardDrinks = numberOunces / (alcohol[4]["standardDrinkoz"]!)
-        } else if (valueSelected == "gin") {
-            standardDrinks = numberOunces / (alcohol[5]["standardDrinkoz"]!)
-        } else if (valueSelected == "tequila") {
-            standardDrinks = numberOunces / (alcohol[6]["standardDrinkoz"]!)
-        }
+//        if (valueSelected == "beer") {
+//            standardDrinks = Double(numberOunces) / (alcohol[2]["standardDrinkoz"]!)
+//        } else if (valueSelected == "wine") {
+//            standardDrinks = numberOunces / (alcohol[0]["standardDrinkoz"]!)
+//        } else if (valueSelected == "vodka") {
+//            standardDrinks = numberOunces / (alcohol[1]["standardDrinkoz"]!)
+//        } else if (valueSelected == "malt-liquor") {
+//            standardDrinks = numberOunces / (alcohol[3]["standardDrinkoz"]!)
+//        } else if (valueSelected == "rum") {
+//            standardDrinks = numberOunces / (alcohol[4]["standardDrinkoz"]!)
+//        } else if (valueSelected == "gin") {
+//            standardDrinks = numberOunces / (alcohol[5]["standardDrinkoz"]!)
+//        } else if (valueSelected == "tequila") {
+//            standardDrinks = numberOunces / (alcohol[6]["standardDrinkoz"]!)
+//        }
 
         
         
