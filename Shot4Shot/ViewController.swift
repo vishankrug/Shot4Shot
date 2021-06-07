@@ -10,17 +10,28 @@ import FirebaseDatabase
 import FirebaseAuth
 import FirebaseUI
 
+var currentUserUID = ""
+let fire = Database.database().reference()
 class ViewController: UIViewController {
     
-    let fire = Database.database().reference()
 
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+              
+              if segue.identifier == "SegueToTabBar" {
+                   if let destVC = segue.destination as? UITabBarController {
+                        destVC.selectedIndex = 3
+                            //(sender as! UIButton).tag
+                   }
+              }
+         }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
         
         //code to add to firebase -- must be in the format
         //will run everytime app is opened so I'll comment it out
-//        fire.child("ss299").setValue([
+//        fire.child("vishankrug").setValue([
 //            "username": "ss299",
 //            "fname": "Saurav",
 //            "lname": "Sawansukha",
@@ -51,35 +62,36 @@ class ViewController: UIViewController {
     
     
     @IBAction func Login(_ sender: Any) {
-        
-        let authUI = FUIAuth.defaultAuthUI()
-        
-        guard authUI != nil else {
-            return
-        }
-        
-        authUI?.delegate = self
-        
-        let authViewController = authUI!.authViewController()
-        
-        present(authViewController, animated: true, completion: nil)
+//
+//        let authUI = FUIAuth.defaultAuthUI()
+//
+//        guard authUI != nil else {
+//            return
+//        }
+//
+//        authUI?.delegate = self
+//
+//        let authViewController = authUI!.authViewController()
+//        
+//        present(authViewController, animated: true, completion: nil)
         
     }
     
 
 }
 
-extension ViewController: FUIAuthDelegate {
-    func authUI(_ authUI: FUIAuth, didSignInWith authDataResult: AuthDataResult?, error: Error?) {
-        
-        if error != nil {
-            return
-        }
-        //Getting userID
-        //authDataResult?.user.uid
-        
-        performSegue(withIdentifier: "loginsegue", sender: self)
-        
-        
-    }
-}
+//extension ViewController: FUIAuthDelegate {
+//    func authUI(_ authUI: FUIAuth, didSignInWith authDataResult: AuthDataResult?, error: Error?) {
+//
+//        if error != nil {
+//            return
+//        }
+//        //Getting userID
+//        //authDataResult?.user.uid
+//
+//        //performSegue(withIdentifier: "loginsegue", sender: self)
+//
+//
+//    }
+//}
+
