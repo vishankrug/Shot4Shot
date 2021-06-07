@@ -23,6 +23,10 @@
 		28393DDE1406EC6B3BBC4E8D /* Pods_Shot4Shot.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7047CB32DE5756F59136FB34 /* Pods_Shot4Shot.framework */; };
 		2AEA2A11B24A005D545E1371 /* Pods_Shot4ShotTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1F3C612B4DBE565B677841E4 /* Pods_Shot4ShotTests.framework */; };
 		AD26B4F55F7E599BFC25C146 /* Pods_Shot4Shot_Shot4ShotUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 848A9B11F46B90D31D016DAE /* Pods_Shot4Shot_Shot4ShotUITests.framework */; };
+		DB851483266AC513006F84DE /* ProfileEditViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB851482266AC513006F84DE /* ProfileEditViewController.swift */; };
+		DB851485266AC8A9006F84DE /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB851484266AC8A9006F84DE /* ProfileViewController.swift */; };
+		DB851487266BDFF7006F84DE /* FriendsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB851486266BDFF7006F84DE /* FriendsViewController.swift */; };
+		DB851489266C117D006F84DE /* MyCustomCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB851488266C117C006F84DE /* MyCustomCell.swift */; };
 		F41DB8AF266B179B003C3C1C /* homeController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F41DB8AE266B179B003C3C1C /* homeController.swift */; };
 /* End PBXBuildFile section */
 
@@ -69,6 +73,10 @@
 		848A9B11F46B90D31D016DAE /* Pods_Shot4Shot_Shot4ShotUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Shot4Shot_Shot4ShotUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		884C9A5DC096B45F88A5E4CB /* Pods-Shot4Shot.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Shot4Shot.debug.xcconfig"; path = "Target Support Files/Pods-Shot4Shot/Pods-Shot4Shot.debug.xcconfig"; sourceTree = "<group>"; };
 		B8A0E1F0D43F8B833AB1718C /* Pods-Shot4Shot.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Shot4Shot.release.xcconfig"; path = "Target Support Files/Pods-Shot4Shot/Pods-Shot4Shot.release.xcconfig"; sourceTree = "<group>"; };
+		DB851482266AC513006F84DE /* ProfileEditViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileEditViewController.swift; sourceTree = "<group>"; };
+		DB851484266AC8A9006F84DE /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
+		DB851486266BDFF7006F84DE /* FriendsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendsViewController.swift; sourceTree = "<group>"; };
+		DB851488266C117C006F84DE /* MyCustomCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyCustomCell.swift; sourceTree = "<group>"; };
 		EA5B91870D0A4BCB8D11F700 /* Pods-Shot4ShotTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Shot4ShotTests.debug.xcconfig"; path = "Target Support Files/Pods-Shot4ShotTests/Pods-Shot4ShotTests.debug.xcconfig"; sourceTree = "<group>"; };
 		F41DB8AE266B179B003C3C1C /* homeController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = homeController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -126,14 +134,18 @@
 		14785DF72666FC2400F64E5A /* Shot4Shot */ = {
 			isa = PBXGroup;
 			children = (
+				DB851488266C117C006F84DE /* MyCustomCell.swift */,
 				14785DF82666FC2400F64E5A /* AppDelegate.swift */,
 				14785DFA2666FC2400F64E5A /* SceneDelegate.swift */,
 				14785DFC2666FC2400F64E5A /* ViewController.swift */,
 				14785DFE2666FC2400F64E5A /* Main.storyboard */,
+				DB851486266BDFF7006F84DE /* FriendsViewController.swift */,
+				DB851484266AC8A9006F84DE /* ProfileViewController.swift */,
 				14785E012666FC2C00F64E5A /* Assets.xcassets */,
 				14785E032666FC2C00F64E5A /* LaunchScreen.storyboard */,
 				14B382E22666FFC5009C7E9A /* GoogleService-Info.plist */,
 				14785E062666FC2C00F64E5A /* Info.plist */,
+				DB851482266AC513006F84DE /* ProfileEditViewController.swift */,
 				F41DB8AE266B179B003C3C1C /* homeController.swift */,
 				143BD2AB266C914F006728B5 /* SignUpViewController.swift */,
 				143BD2AD266C9275006728B5 /* LogInViewController.swift */,
@@ -459,10 +471,15 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DB851483266AC513006F84DE /* ProfileEditViewController.swift in Sources */,
+				14785DFD2666FC2400F64E5A /* ViewController.swift in Sources */,
+				DB851485266AC8A9006F84DE /* ProfileViewController.swift in Sources */,
+				DB851489266C117D006F84DE /* MyCustomCell.swift in Sources */,
 				F41DB8AF266B179B003C3C1C /* homeController.swift in Sources */,
 				14785DFD2666FC2400F64E5A /* ViewController.swift in Sources */,
 				143BD2AE266C9275006728B5 /* LogInViewController.swift in Sources */,
 				14785DF92666FC2400F64E5A /* AppDelegate.swift in Sources */,
+				DB851487266BDFF7006F84DE /* FriendsViewController.swift in Sources */,
 				14785DFB2666FC2400F64E5A /* SceneDelegate.swift in Sources */,
 				143BD2AC266C914F006728B5 /* SignUpViewController.swift in Sources */,
 			);
