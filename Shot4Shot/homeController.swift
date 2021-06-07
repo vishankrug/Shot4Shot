@@ -64,7 +64,7 @@ class homeController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
 
     var numberShots = 0
     var numberCups = 0
-    var username = "vishankrug"
+    var username = currentUserUID
     var typeContainer = "Cups"
     var images = [UIImage]()
     var list: [String] = [String]()
@@ -96,6 +96,8 @@ class homeController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
     @IBOutlet weak var removeDrink: UIButton!
     @IBOutlet weak var container: UISegmentedControl!
     @IBOutlet weak var drinkOptions: UIPickerView!
+    
+    var latestDate: String = ""
     
     // Which type of Container is chosen
     @IBAction func indexChanged(_ sender: Any) {
@@ -292,7 +294,10 @@ class homeController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
 
             var history = data["history"] as! [String: Any]
 //            print(history)
-            var currDates = history["06-01-2021"] as! [String: Double] //this is hardcoded
+            var sortedHistory = Array(history.keys).sorted(by: <)
+            self.latestDate = sortedHistory[sortedHistory.count - 1] as! String
+            print(self.latestDate)
+            var currDates = history[self.latestDate] as! [String: Double] //this is hardcoded
 //            print(currDates)
 //            print("this is how it is")
 //            print(self.valueSelected)
@@ -305,7 +310,7 @@ class homeController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
             
             currDates[self.valueSelected] = temp
 
-            history["06-01-2021"]  = currDates
+            history[self.latestDate]  = currDates
             newHistory = history
            
         }
@@ -328,7 +333,7 @@ class homeController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
 
             var history = data["history"] as! [String: Any]
             
-            history = history["06-01-2021"] as! [String: Int] //data is hardcoded here
+            history = history[self.latestDate] as! [String: Int] //data is hardcoded here
 
             
             for x in history.keys {
@@ -453,9 +458,8 @@ class homeController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
             }
         }
         
-        
-       
-        
+        let status = username + "/state"
+        self.fire.child(status).setValue(self.state.text)
     }
     
     func resetInfo() {
@@ -483,14 +487,6 @@ class homeController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
      
             self.list = ["Vodka","Gin", "Tequila",
                     "Beer","Whiskey","Rum", "Wine"]
-           // print("Data is printed here")
-            //print("NOW I AM HEREEEE")
-
-            
-            //print(self.data)
-        
-        
-      //  print(data)
 
         
 //        if let localData = self.readLocalFile(forName: "BAC") {

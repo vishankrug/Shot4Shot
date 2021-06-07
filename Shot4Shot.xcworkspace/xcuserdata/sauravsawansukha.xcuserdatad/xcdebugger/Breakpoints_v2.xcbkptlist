@@ -3,4 +3,114 @@
    uuid = "69159DD3-C0AA-4980-8D09-26C0F6A68A84"
    type = "0"
    version = "2.0">
+   <Breakpoints>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "380A0753-D254-4349-869E-68A2B771B067"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Shot4Shot/ProfileViewController.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "17"
+            endingLineNumber = "17"
+            landmarkName = "ProfileViewController"
+            landmarkType = "3">
+            <Locations>
+               <Location
+                  uuid = "380A0753-D254-4349-869E-68A2B771B067 - 9e9b5d2efd5b91c"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "Shot4Shot.ProfileViewController.FullNameLabel.getter : Swift.Optional&lt;__C.UILabel&gt;"
+                  moduleName = "Shot4Shot"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/sauravsawansukha/Desktop/Shot4Shot/Shot4Shot/ProfileViewController.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "17"
+                  endingLineNumber = "17"
+                  offsetFromSymbolStart = "88">
+               </Location>
+               <Location
+                  uuid = "380A0753-D254-4349-869E-68A2B771B067 - a86eec9867fb45e8"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "Shot4Shot.ProfileViewController.FullNameLabel.setter : Swift.Optional&lt;__C.UILabel&gt;"
+                  moduleName = "Shot4Shot"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/sauravsawansukha/Desktop/Shot4Shot/Shot4Shot/ProfileViewController.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "17"
+                  endingLineNumber = "17"
+                  offsetFromSymbolStart = "155">
+               </Location>
+               <Location
+                  uuid = "380A0753-D254-4349-869E-68A2B771B067 - ec9e913de1b4de4"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "Shot4Shot.ProfileViewController.FullNameLabel.modify : Swift.Optional&lt;__C.UILabel&gt;"
+                  moduleName = "Shot4Shot"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/sauravsawansukha/Desktop/Shot4Shot/Shot4Shot/ProfileViewController.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "0"
+                  endingLineNumber = "0"
+                  offsetFromSymbolStart = "59">
+               </Location>
+               <Location
+                  uuid = "380A0753-D254-4349-869E-68A2B771B067 - bcbfa49a8e39eb14"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "Shot4Shot.ProfileViewController.FullNameLabel.modify : Swift.Optional&lt;__C.UILabel&gt; with unmangled suffix &quot;.resume.0&quot;"
+                  moduleName = "Shot4Shot"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/sauravsawansukha/Desktop/Shot4Shot/Shot4Shot/ProfileViewController.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "17"
+                  endingLineNumber = "17"
+                  offsetFromSymbolStart = "64">
+               </Location>
+               <Location
+                  uuid = "380A0753-D254-4349-869E-68A2B771B067 - aa9fd160829580f3"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "Shot4Shot.ProfileViewController.init(nibName: Swift.Optional&lt;Swift.String&gt;, bundle: Swift.Optional&lt;__C.NSBundle&gt;) -&gt; Shot4Shot.ProfileViewController"
+                  moduleName = "Shot4Shot"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/sauravsawansukha/Desktop/Shot4Shot/Shot4Shot/ProfileViewController.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "17"
+                  endingLineNumber = "17"
+                  offsetFromSymbolStart = "418">
+               </Location>
+               <Location
+                  uuid = "380A0753-D254-4349-869E-68A2B771B067 - 85403e95e92597f8"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "Shot4Shot.ProfileViewController.init(coder: __C.NSCoder) -&gt; Swift.Optional&lt;Shot4Shot.ProfileViewController&gt;"
+                  moduleName = "Shot4Shot"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/sauravsawansukha/Desktop/Shot4Shot/Shot4Shot/ProfileViewController.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "17"
+                  endingLineNumber = "17"
+                  offsetFromSymbolStart = "359">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+   </Breakpoints>
 </Bucket>
