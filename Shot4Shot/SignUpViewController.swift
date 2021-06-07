@@ -25,6 +25,7 @@ class SignUpViewController: UIViewController {
     @IBOutlet weak var numberOfDrinksTextField: UITextField!
     @IBOutlet weak var signUpButton: UIButton!
     @IBOutlet weak var errorLabel: UILabel!
+    @IBOutlet weak var phoneNumberTextField: UITextField!
     
     let fire = Database.database().reference()
     
@@ -43,7 +44,7 @@ class SignUpViewController: UIViewController {
     
     func validateFields() -> String? {
         
-        if(firstNameTextField.text?.trimmingCharacters(in: .whitespacesAndNewlines) == "" || lastNameTextField.text?.trimmingCharacters(in: .whitespacesAndNewlines) == "" || emailTextField.text?.trimmingCharacters(in: .whitespacesAndNewlines) == "" || passwordTextField.text?.trimmingCharacters(in: .whitespacesAndNewlines) == "" || sexTextField.text?.trimmingCharacters(in: .whitespacesAndNewlines) == "" || weightTextField.text?.trimmingCharacters(in: .whitespacesAndNewlines) == "" || heightTextField.text?.trimmingCharacters(in: .whitespacesAndNewlines) == "" || usernameTextField.text?.trimmingCharacters(in: .whitespacesAndNewlines) == "" || emergencyContactTextField.text?.trimmingCharacters(in: .whitespacesAndNewlines) == "" || numberOfDrinksTextField.text?.trimmingCharacters(in: .whitespacesAndNewlines) == "" || addressTextField.text?.trimmingCharacters(in: .whitespacesAndNewlines) == "" || birthdayTextField.text?.trimmingCharacters(in: .whitespacesAndNewlines) == "" ) {
+        if(firstNameTextField.text?.trimmingCharacters(in: .whitespacesAndNewlines) == "" || lastNameTextField.text?.trimmingCharacters(in: .whitespacesAndNewlines) == "" || emailTextField.text?.trimmingCharacters(in: .whitespacesAndNewlines) == "" || passwordTextField.text?.trimmingCharacters(in: .whitespacesAndNewlines) == "" || sexTextField.text?.trimmingCharacters(in: .whitespacesAndNewlines) == "" || weightTextField.text?.trimmingCharacters(in: .whitespacesAndNewlines) == "" || heightTextField.text?.trimmingCharacters(in: .whitespacesAndNewlines) == "" || usernameTextField.text?.trimmingCharacters(in: .whitespacesAndNewlines) == "" || emergencyContactTextField.text?.trimmingCharacters(in: .whitespacesAndNewlines) == "" || numberOfDrinksTextField.text?.trimmingCharacters(in: .whitespacesAndNewlines) == "" || addressTextField.text?.trimmingCharacters(in: .whitespacesAndNewlines) == "" || birthdayTextField.text?.trimmingCharacters(in: .whitespacesAndNewlines) == "" || phoneNumberTextField.text?.trimmingCharacters(in: .whitespacesAndNewlines) == "") {
             
             return "Please fill in all fields."
             
@@ -78,6 +79,7 @@ class SignUpViewController: UIViewController {
             let sex = sexTextField.text!.trimmingCharacters(in: .whitespacesAndNewlines)
             let height = Double(heightTextField.text!.trimmingCharacters(in: .whitespacesAndNewlines))
             let emergencyContact = emergencyContactTextField.text!.trimmingCharacters(in: .whitespacesAndNewlines)
+            let phoneNumber = phoneNumberTextField.text!.trimmingCharacters(in: .whitespacesAndNewlines)
             let numberOfDrinksAllowed = Int(numberOfDrinksTextField.text!.trimmingCharacters(in: .whitespacesAndNewlines))
             Auth.auth().createUser(withEmail: email, password: password) { (result, err) in
                 if err != nil {
@@ -93,6 +95,7 @@ class SignUpViewController: UIViewController {
                         "email": email,
                         "address": address,
                         "username": username,
+                        "number": phoneNumber,
                         "fname": fname,
                         "lname": lname,
                         "birthday": birthday,

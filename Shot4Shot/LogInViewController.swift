@@ -23,9 +23,6 @@ class LogInViewController: UIViewController {
     
     @IBAction func loginTapped(_ sender: Any) {
         
-        //error message, validate
-        //initialize blood alc level to 0 and state to sober if new day
-        
         let email = emailTextField.text!.trimmingCharacters(in: .whitespacesAndNewlines)
         let password = passwordTextField.text!.trimmingCharacters(in: .whitespacesAndNewlines)
         
@@ -35,6 +32,23 @@ class LogInViewController: UIViewController {
                 self.errorLabel.alpha = 1
             } else {
                 currentUserUID = result!.user.uid
+                
+                let date = Date()
+                let dateFormatter = DateFormatter()
+                dateFormatter.dateFormat = "MM-dd-yyyy"
+                let currDate = String(dateFormatter.string(from: date))
+                
+                //reading data
+                fire.child(currentUserUID+"/history").observeSingleEvent(of: .value)
+                { (snapshot) in
+                    let data = snapshot.value as? [String: Any]
+                    if((data?.keys.contains(currDate)) == false){
+                        fire.child(currentUserUID+"/bloodAlcForDay").setValue(0.0)
+                        fire.child(currentUserUID+"/state").setValue("Sober")
+                    }
+                }
+                
+                
                 let homeViewController = self.storyboard?.instantiateViewController(identifier: "HomeVC")
                 
                 self.view.window?.rootViewController = homeViewController

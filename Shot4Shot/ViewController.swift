@@ -11,10 +11,9 @@ import FirebaseAuth
 import FirebaseUI
 
 var currentUserUID = ""
-
+let fire = Database.database().reference()
 class ViewController: UIViewController {
     
-    let fire = Database.database().reference()
 
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
               
