@@ -22,7 +22,6 @@ class ViewController: UIViewController {
     
     let fire = Database.database().reference()
 
-class ViewController: UIViewController {
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
               
               if segue.identifier == "SegueToTabBar" {
@@ -102,3 +101,4 @@ class ViewController: UIViewController {
 //
 //    }
 //}
+

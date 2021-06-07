@@ -23,7 +23,8 @@ class LogInViewController: UIViewController {
     
     @IBAction func loginTapped(_ sender: Any) {
         
-        
+        //error message, validate
+        //initialize blood alc level to 0 if new day
         
         let email = emailTextField.text!.trimmingCharacters(in: .whitespacesAndNewlines)
         let password = passwordTextField.text!.trimmingCharacters(in: .whitespacesAndNewlines)
