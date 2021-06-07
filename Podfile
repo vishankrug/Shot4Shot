@@ -19,6 +19,8 @@ target 'Shot4Shot' do
   pod 'Firebase/Core'
   pod 'Firebase/Database'
   pod 'FirebaseUI/Auth'
+  pod 'Firebase/Firestore'
+  pod 'Firebase/Analytics'
   pod 'Charts'
 
 

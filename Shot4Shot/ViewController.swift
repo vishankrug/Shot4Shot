@@ -16,6 +16,12 @@ var currentUser = userInfo(fname: "NAME", lname: "", birth: "01-20-2000", sex: "
 // USER WE ARE EDITING IN FIREBASE. Make surue to change!
 let USER : String = "vishankrug"
 
+var currentUserUID = ""
+
+class ViewController: UIViewController {
+    
+    let fire = Database.database().reference()
+
 class ViewController: UIViewController {
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
               
@@ -30,8 +36,6 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
-        
-        let fire = Database.database().reference()
         
         //code to add to firebase -- must be in the format
         //will run everytime app is opened so I'll comment it out
@@ -66,35 +70,35 @@ class ViewController: UIViewController {
     
     
     @IBAction func Login(_ sender: Any) {
-        
-        let authUI = FUIAuth.defaultAuthUI()
-        
-        guard authUI != nil else {
-            return
-        }
-        
-        authUI?.delegate = self
-        
-        let authViewController = authUI!.authViewController()
-        
-        present(authViewController, animated: true, completion: nil)
+//
+//        let authUI = FUIAuth.defaultAuthUI()
+//
+//        guard authUI != nil else {
+//            return
+//        }
+//
+//        authUI?.delegate = self
+//
+//        let authViewController = authUI!.authViewController()
+//        
+//        present(authViewController, animated: true, completion: nil)
         
     }
     
 
 }
 
-extension ViewController: FUIAuthDelegate {
-    func authUI(_ authUI: FUIAuth, didSignInWith authDataResult: AuthDataResult?, error: Error?) {
-        
-        if error != nil {
-            return
-        }
-        //Getting userID
-        //authDataResult?.user.uid
-        
-        performSegue(withIdentifier: "loginsegue", sender: self)
-        
-        
-    }
-}
+//extension ViewController: FUIAuthDelegate {
+//    func authUI(_ authUI: FUIAuth, didSignInWith authDataResult: AuthDataResult?, error: Error?) {
+//
+//        if error != nil {
+//            return
+//        }
+//        //Getting userID
+//        //authDataResult?.user.uid
+//
+//        //performSegue(withIdentifier: "loginsegue", sender: self)
+//
+//
+//    }
+//}
