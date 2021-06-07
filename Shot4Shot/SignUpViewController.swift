@@ -9,8 +9,6 @@ import UIKit
 import FirebaseAuth
 import FirebaseDatabase
 
-var currentUserUID = ""
-
 class SignUpViewController: UIViewController {
 
     @IBOutlet weak var firstNameTextField: UITextField!

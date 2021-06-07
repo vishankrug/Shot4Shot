@@ -10,6 +10,8 @@ import FirebaseDatabase
 import FirebaseAuth
 import FirebaseUI
 
+var currentUserUID = ""
+
 class ViewController: UIViewController {
     
     let fire = Database.database().reference()
