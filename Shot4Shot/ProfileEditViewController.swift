@@ -10,31 +10,31 @@ import FirebaseDatabase
 import FirebaseAuth
 import FirebaseUI
 
-class userInfo {
-    var firstName : String
-    var lastName : String
-    var birth : String
-    var sex : String
-    var height : Double
-    var weight : Double
-    var age : Int
-    var emergency : String
-    var address : String
-    var number : String
-    
-    init(fname : String, lname: String, birth : String, sex: String, height: Double, weight: Double, age: Int, emergency: String, address: String, number: String) {
-        firstName = fname
-        lastName = lname
-        self.birth =  birth
-        self.age = age
-        self.sex =  sex
-        self.height = height
-        self.weight = weight
-        self.emergency = emergency
-        self.address = address
-        self.number = number
-    }
-}
+//class userInfo {
+//    var firstName : String
+//    var lastName : String
+//    var birth : String
+//    var sex : String
+//    var height : Double
+//    var weight : Double
+//    var age : Int
+//    var emergency : String
+//    var address : String
+//    var number : String
+//    
+//    init(fname : String, lname: String, birth : String, sex: String, height: Double, weight: Double, age: Int, emergency: String, address: String, number: String) {
+//        firstName = fname
+//        lastName = lname
+//        self.birth =  birth
+//        self.age = age
+//        self.sex =  sex
+//        self.height = height
+//        self.weight = weight
+//        self.emergency = emergency
+//        self.address = address
+//        self.number = number
+//    }
+//}
 
 class ProfileEditViewController: UIViewController {
 
@@ -48,11 +48,7 @@ class ProfileEditViewController: UIViewController {
     var emergencyNum : String = "null"
     var address : String = "123 uw way seattle wa"
     var number : String = "123-456-3456"
-    
-//    @IBAction func backButton(_ sender: Any) {
-//        performSegue(withIdentifier: "profile", sender: sender)
-//        self.tabBarController?.selectedIndex = 3
-//    }
+    var numDrinks : Int = 4
     
     @IBOutlet weak var birthdayTextField: UITextField!
     private var datePicker : UIDatePicker?
@@ -83,7 +79,7 @@ class ProfileEditViewController: UIViewController {
     }
     
     func defaultValues() {
-        fire.child(USER).observeSingleEvent(of: .value)
+        fire.child(currentUserUID).observeSingleEvent(of: .value)
                 { (snapshot) in
                     let data = snapshot.value as! [String: Any]
                     
@@ -123,6 +119,8 @@ class ProfileEditViewController: UIViewController {
             self.birthdayTextField.text = data["birthday"] as? String
             self.birthday = (data["birthday"] as? String)!
             
+            self.numDrinks = (data["numberOfDrinksAllowed"] as? Int)!
+            self.drinkTextField.text = String((data["numberOfDrinksAllowed"] as? Int)!)
             
             self.emergencyTextField.text = data["emergencyContact"] as? String
             self.emergencyNum = (data["emergencyContact"] as? String)!
@@ -162,6 +160,11 @@ class ProfileEditViewController: UIViewController {
         
         birthday = birthdayTextField.text!
         view.endEditing(true)
+    }
+    
+    @IBOutlet weak var drinkTextField: UITextField!
+    @IBAction func drinkEdit(_ sender: Any) {
+        numDrinks = Int(drinkTextField.text!)!
     }
     
     // Address Field
@@ -246,16 +249,7 @@ class ProfileEditViewController: UIViewController {
     
     // when save button is pressed
     @IBAction func saveInfo(_ sender: Any) {
-        
-//        fire.child(USER).setValue([
-//                    "fname": firstName,
-//                    "lname": lastName,
-//                    "birthday": birthday,
-//                    "sex": sex,
-//                    "height": height,
-//                    "weight": weight,
-//                    "emergencyContact": emergencyNum,
-//                ])
+        let USER = currentUserUID
         
         fire.child(USER + "/emergencyContact").setValue(emergencyNum)
         fire.child(USER + "/fname").setValue(firstName)
@@ -273,12 +267,8 @@ class ProfileEditViewController: UIViewController {
         fire.child(USER + "/address").setValue(address)
         
         fire.child(USER + "/number").setValue(number)
-
         
-        
-        
-        
-        currentUser = userInfo(fname: firstName, lname: lastName, birth: birthday, sex: sex, height: height, weight: weight, age: age, emergency: emergencyNum, address: address, number: number)
+        fire.child(USER + "/numberOfDrinksAllowed").setValue(numDrinks)
     }
     
     override func didReceiveMemoryWarning() {

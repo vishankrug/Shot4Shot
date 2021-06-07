@@ -6,6 +6,9 @@
 //
 
 import UIKit
+import FirebaseDatabase
+import FirebaseAuth
+import FirebaseUI
 
 let NUMBER_DRINK = "5"
 
@@ -22,6 +25,7 @@ class ProfileViewController: UIViewController {
     @IBOutlet weak var numDrinkLabel: UILabel!
     
     @IBOutlet weak var imageView: RoundedImageView!
+    let fire = Database.database().reference()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -29,47 +33,56 @@ class ProfileViewController: UIViewController {
     }
     
     private func fillText() {
-        FullNameLabel.text = currentUser.firstName + " " + currentUser.lastName
-        
-        // get current user's b'day and chnages to date bject
-        
-        let currDate : String  = String(currentUser.birth)
-        
-        if(currDate == "") {
-            ageLabel.text = "NA"
-        } else {
-            // since currDate is a string, we need to format into Date object to compare
-            let dateFormatter = DateFormatter()
-            dateFormatter.locale = Locale(identifier: "en_US_POSIX") // set locale to reliable US_POSIX
-            dateFormatter.dateFormat = "MM-dd-yyyy"
-            let birthdayDate = dateFormatter.date(from: currDate)!
-    
-            // find difference between today and birthday date
-            let interval = Date() - birthdayDate
-            let years = Int(interval.day! / 365)
+        fire.child(currentUserUID).observeSingleEvent(of: .value)
+        { [self] (snapshot) in
+                    let data = (snapshot.value as? [String: Any])!
+                    print(data)
+            FullNameLabel.text = ((data["fname"] as? String)!) + " " + ((data["lname"] as? String)!)
             
-            // update label with age
-            ageLabel.text = String(years)
-        }
+            let currDate : String  = String((data["birthday"] as? String)!)
+            
+            if(currDate == "") {
+                ageLabel.text = "NA"
+            } else {
+                // since currDate is a string, we need to format into Date object to compare
+                let dateFormatter = DateFormatter()
+                dateFormatter.locale = Locale(identifier: "en_US_POSIX") // set locale to reliable US_POSIX
+                dateFormatter.dateFormat = "MM-dd-yyyy"
+                let birthdayDate = dateFormatter.date(from: currDate)!
         
-        if (currentUser.sex == "female") {
-            sexLabel.text = "F"
-        } else if (currentUser.sex == "male") {
-            sexLabel.text = "M"
-        } else {
-            sexLabel.text = "NA"
-        }
-        
-        let height = String(currentUser.height)
-        let heightSplit = height.components(separatedBy: ".")
-        heightLabel.text = heightSplit[0] + " ft " + heightSplit[1] + " in"
-        weightLabel.text = String(Int(currentUser.weight)) + " lbs"
-        
-        emergencyNumberLabel.text = currentUser.emergency
-        phoneNumberLabel.text = currentUser.number
-        addressLabel.text = currentUser.address
-        
-        numDrinkLabel.text = NUMBER_DRINK
+                // find difference between today and birthday date
+                let interval = Date() - birthdayDate
+                let years = Int(interval.day! / 365)
+                
+                // update label with age
+                ageLabel.text = String(years)
+            }
+            
+            let sexType = (data["sex"] as? String)!
+            if (sexType == "Female") {
+                sexLabel.text = "F"
+            } else if (sexType == "Male") {
+                sexLabel.text = "M"
+            } else {
+                sexLabel.text = "NA"
+            }
+            
+            let height = String((data["height"] as? Double)!)
+            let heightSplit = height.components(separatedBy: ".")
+            heightLabel.text = heightSplit[0] + " ft " + heightSplit[1] + " in"
+            
+            
+            weightLabel.text = String(Int((data["weight"] as? Int)!)) + " lbs"
+            
+            emergencyNumberLabel.text = (data["emergencyContact"] as? String)!
+            phoneNumberLabel.text = (data["number"] as? String)!
+            
+            addressLabel.text = (data["address"] as? String)!
+            
+            numDrinkLabel.text = String((data["numberOfDrinksAllowed"] as? Int)!)
+            
+            
+                }
         
     }
 
