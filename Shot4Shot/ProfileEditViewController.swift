@@ -68,6 +68,20 @@ class ProfileEditViewController: UIViewController {
         hieghtFormat()
     }
     
+    @IBAction func theAction(_ sender: UIButton) {
+              performSegue(withIdentifier: "SegueToTabBar", sender: sender)
+         }
+    
+    @IBAction func myUnwindAction(unwindSegue: UIStoryboardSegue) {
+        NSLog("inside unwind action")
+        performSegue(withIdentifier: "profile", sender: self)
+    }
+    
+    @IBAction func backAction(_ sender: Any) {
+        self.dismiss(animated: false, completion: nil)
+//        performSegue(withIdentifier: "profile", sender: self)
+    }
+    
     func defaultValues() {
         fire.child(USER).observeSingleEvent(of: .value)
                 { (snapshot) in

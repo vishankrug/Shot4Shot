@@ -17,7 +17,16 @@ var currentUser = userInfo(fname: "NAME", lname: "", birth: "01-20-2000", sex: "
 let USER : String = "vishankrug"
 
 class ViewController: UIViewController {
-
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+              
+              if segue.identifier == "SegueToTabBar" {
+                   if let destVC = segue.destination as? UITabBarController {
+                        destVC.selectedIndex = 3
+                            //(sender as! UIButton).tag
+                   }
+              }
+         }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
