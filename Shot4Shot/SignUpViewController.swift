@@ -86,7 +86,13 @@ class SignUpViewController: UIViewController {
                     //There was an error creating the user
                     self.showError("Error creating user")
                 } else {
+                    let date = Date()
+                    let dateFormatter = DateFormatter()
+                    dateFormatter.dateFormat = "MM-dd-yyyy"
+                    let currDate = String(dateFormatter.string(from: date))
+                    
                     self.fire.child(result!.user.uid).setValue([
+                        "email": email,
                         "address": address,
                         "username": username,
                         "fname": fname,
@@ -97,7 +103,14 @@ class SignUpViewController: UIViewController {
                         "weight": weight!,
                         "emergencyContact": emergencyContact,
                         "numberOfDrinksAllowed": numberOfDrinksAllowed!,
-                        "history": [],
+                        "history": [currDate: [
+                                        "vodka": 0,
+                                        "wine": 0,
+                                        "beer": 0,
+                                        "malt-liquor": 0,
+                                        "rum": 0,
+                                        "gin": 0,
+                                        "tequila": 0]],
                         "bloodAlcForDay": 0.00,
                         "uid": result!.user.uid
                     ])
