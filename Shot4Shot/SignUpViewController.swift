@@ -110,6 +110,7 @@ class SignUpViewController: UIViewController {
                                         "gin": 0,
                                         "tequila": 0]],
                         "bloodAlcForDay": 0.00,
+                        "state": "Sober",
                         "uid": result!.user.uid
                     ])
                     currentUserUID = result!.user.uid
