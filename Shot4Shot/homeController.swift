@@ -256,187 +256,193 @@ class homeController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
         var temp = 0.0
         
 
-        let numberOunces = ((shotOunces * Double(numberShots)) + (cupOunces * Double(numberCups)))
+        if (numberShots != 0 || numberCups != 0) {
+            let numberOunces = ((shotOunces * Double(numberShots)) + (cupOunces * Double(numberCups)))
 
-      
-        
-        var drinkOz = alcohol[0]["standardDrinkoz"] as! Double
-        
-        if (valueSelected == "beer") {
-            print("in send data")
-            var drinkOz = alcohol[2]["standardDrinkoz"] as! Double
-            standardDrinks = numberOunces / drinkOz
-            print(standardDrinks)
-            
-        } else if (valueSelected == "wine") {
+          
             
             var drinkOz = alcohol[0]["standardDrinkoz"] as! Double
-            standardDrinks = numberOunces / drinkOz
             
-        } else if (valueSelected == "vodka") {
+            if (valueSelected == "beer") {
+                print("in send data")
+                var drinkOz = alcohol[2]["standardDrinkoz"] as! Double
+                standardDrinks = numberOunces / drinkOz
+                print(standardDrinks)
+                
+            } else if (valueSelected == "wine") {
+                
+                var drinkOz = alcohol[0]["standardDrinkoz"] as! Double
+                standardDrinks = numberOunces / drinkOz
+                
+            } else if (valueSelected == "vodka") {
+                
+                var drinkOz = alcohol[1]["standardDrinkoz"] as! Double
+                standardDrinks = numberOunces / drinkOz
+                
+            } else if (valueSelected == "malt-liquor") {
+                
+                var drinkOz = alcohol[3]["standardDrinkoz"] as! Double
+                standardDrinks = numberOunces / drinkOz
+                
+            } else if (valueSelected == "rum") {
+                
+                var drinkOz = alcohol[4]["standardDrinkoz"] as! Double
+                standardDrinks = numberOunces / drinkOz
+                
+            } else if (valueSelected == "gin") {
+                
+                var drinkOz = alcohol[5]["standardDrinkoz"] as! Double
+                standardDrinks = numberOunces / drinkOz
+                
+            } else if (valueSelected == "tequila") {
+                
+                var drinkOz = alcohol[6]["standardDrinkoz"] as! Double
+                standardDrinks = numberOunces / drinkOz
+                
+            }
+     
+            var newHistory = [String: Any]()
             
-            var drinkOz = alcohol[1]["standardDrinkoz"] as! Double
-            standardDrinks = numberOunces / drinkOz
-            
-        } else if (valueSelected == "malt-liquor") {
-            
-            var drinkOz = alcohol[3]["standardDrinkoz"] as! Double
-            standardDrinks = numberOunces / drinkOz
-            
-        } else if (valueSelected == "rum") {
-            
-            var drinkOz = alcohol[4]["standardDrinkoz"] as! Double
-            standardDrinks = numberOunces / drinkOz
-            
-        } else if (valueSelected == "gin") {
-            
-            var drinkOz = alcohol[5]["standardDrinkoz"] as! Double
-            standardDrinks = numberOunces / drinkOz
-            
-        } else if (valueSelected == "tequila") {
-            
-            var drinkOz = alcohol[6]["standardDrinkoz"] as! Double
-            standardDrinks = numberOunces / drinkOz
-            
-        }
- 
-        var newHistory = [String: Any]()
-        
-        fire.child(username).observeSingleEvent(of: .value)
-                { (snapshot) in
-                    let data = (snapshot.value as? [String: Any])!
+            fire.child(username).observeSingleEvent(of: .value)
+                    { (snapshot) in
+                        let data = (snapshot.value as? [String: Any])!
 
-            var history = data["history"] as! [String: Any]
-            var sortedHistory = Array(history.keys).sorted(by: <)
-            self.latestDate = sortedHistory[sortedHistory.count - 1] as! String
-            var currDates = history[self.latestDate] as! [String: Double] //this is hardcoded
+                var history = data["history"] as! [String: Any]
+                var sortedHistory = Array(history.keys).sorted(by: <)
+                self.latestDate = sortedHistory[sortedHistory.count - 1] as! String
+                var currDates = history[self.latestDate] as! [String: Double] //this is hardcoded
 
-            
-             
-            temp = Double(currDates[self.valueSelected]!)
-            temp = Double(temp) + standardDrinks
-            
-            currDates[self.valueSelected] = temp
+                
+                 
+                temp = Double(currDates[self.valueSelected]!)
+                temp = Double(temp) + standardDrinks
+                
+                currDates[self.valueSelected] = temp
 
-            history[self.latestDate]  = currDates
+                history[self.latestDate]  = currDates
+               
            
-       
-            newHistory = history
-           
-            let historyName = self.username + "/history"
-            self.fire.child(historyName).setValue(newHistory)
+                newHistory = history
+               
+                let historyName = self.username + "/history"
+                self.fire.child(historyName).setValue(newHistory)
 
-            history = history[self.latestDate] as! [String : Any]
-            for x in history.keys {
-                var hist = x as! String
-                print(history[hist])
-                var historyDouble = Double(history[hist] as! Double)
-                print("test test")
-                print(history)
-                if (hist == "beer") {
-                    
-                    
-                    var standardDouble = self.alcohol[2]["standardDrinkgrams"] as! Double
-                    
-                    print(standardDouble)
-                    print(historyDouble)
-                    print("end test end test")
-                    self.numGrams = self.numGrams + standardDouble * historyDouble
-                    
-                } else if (hist == "wine") {
-                    
-                    var standardDouble = self.alcohol[0]["standardDrinkgrams"] as! Double
-                    self.numGrams = self.numGrams + (standardDouble) * historyDouble
-                    
-                } else if (hist == "vodka") {
-                    
-                    var standardDouble = self.alcohol[1]["standardDrinkgrams"] as! Double
-                    print(standardDouble)
-                    self.numGrams = self.numGrams + (standardDouble) * historyDouble
-                    print(self.numGrams)
-                } else if (hist == "malt-liquor") {
-                    
-                    var standardDouble = self.alcohol[3]["standardDrinkgrams"] as! Double
-                    
-                    self.numGrams = self.numGrams + (standardDouble) * historyDouble
-                    
-                } else if (hist == "rum") {
-                    
-                    var standardDouble = self.alcohol[4]["standardDrinkgrams"] as! Double
+                history = history[self.latestDate] as! [String : Any]
+                for x in history.keys {
+                    var hist = x as! String
+                    print(history[hist])
+                    var historyDouble = Double(history[hist] as! Double)
+                    print("test test")
+                    print(history)
+                    if (hist == "beer") {
+                        
+                        
+                        var standardDouble = self.alcohol[2]["standardDrinkgrams"] as! Double
+                        
+                        print(standardDouble)
+                        print(historyDouble)
+                        print("end test end test")
+                        self.numGrams = self.numGrams + standardDouble * historyDouble
+                        
+                    } else if (hist == "wine") {
+                        
+                        var standardDouble = self.alcohol[0]["standardDrinkgrams"] as! Double
+                        self.numGrams = self.numGrams + (standardDouble) * historyDouble
+                        
+                    } else if (hist == "vodka") {
+                        
+                        var standardDouble = self.alcohol[1]["standardDrinkgrams"] as! Double
+                        print(standardDouble)
+                        self.numGrams = self.numGrams + (standardDouble) * historyDouble
+                        print(self.numGrams)
+                    } else if (hist == "malt-liquor") {
+                        
+                        var standardDouble = self.alcohol[3]["standardDrinkgrams"] as! Double
+                        
+                        self.numGrams = self.numGrams + (standardDouble) * historyDouble
+                        
+                    } else if (hist == "rum") {
+                        
+                        var standardDouble = self.alcohol[4]["standardDrinkgrams"] as! Double
 
-                    self.numGrams = self.numGrams + (standardDouble) * historyDouble
-                    
-                } else if (hist == "gin") {
-                    
-                    var standardDouble = self.alcohol[5]["standardDrinkgrams"] as! Double
+                        self.numGrams = self.numGrams + (standardDouble) * historyDouble
+                        
+                    } else if (hist == "gin") {
+                        
+                        var standardDouble = self.alcohol[5]["standardDrinkgrams"] as! Double
 
-                    self.numGrams = self.numGrams + (standardDouble) * historyDouble
-                    
-                } else if (hist == "tequila") { //this is meant to be tequilla
-                    
-                    var standardDouble = self.alcohol[6]["standardDrinkgrams"] as! Double
-                    self.numGrams = self.numGrams + (standardDouble) * historyDouble
+                        self.numGrams = self.numGrams + (standardDouble) * historyDouble
+                        
+                    } else if (hist == "tequila") { //this is meant to be tequilla
+                        
+                        var standardDouble = self.alcohol[6]["standardDrinkgrams"] as! Double
+                        self.numGrams = self.numGrams + (standardDouble) * historyDouble
+                        
+                    }
                     
                 }
                 
-            }
-            
-            var sex = ""
-            var weight = 0.0
-            var rConstant = 0.0
+                var sex = ""
+                var weight = 0.0
+                var rConstant = 0.0
 
-            sex = data["sex"] as! String
-            weight = data["weight"] as! Double
-            weight = weight * 453.592
+                sex = data["sex"] as! String
+                weight = data["weight"] as! Double
+                weight = weight * 453.592
 
-            if (sex == "female") {
-                rConstant = 0.55
-            } else {
-                rConstant = 0.68
-            }
-            
-            print("Start calc")
-            
-            print(self.numGrams)
-            print(weight)
-            print(rConstant)
-            
-            print("End calc")
-            
-            self.bac = (self.numGrams / (weight * rConstant)) * 100
-            print("in bac")
-            print(self.bac)
-      
-            let bacSet = self.username + "/bloodAlcForDay"
-            self.fire.child(bacSet).setValue(self.bac)
-           
-            self.BAC.text = String((self.bac * 100).rounded() / 100)
-            
-            let currentBAC = self.bac
-            
-            print(currentBAC)
-            if (currentBAC != 0.0) {
-                if (currentBAC < 0.08) {
-                    self.state.text = "Legally Intoxicated"
-                } else if (currentBAC < 0.40) {
-                    self.state.text = "Very Impaired"
+                if (sex == "female") {
+                    rConstant = 0.55
                 } else {
-                    self.state.text = "Serious Complications"
+                    rConstant = 0.68
                 }
+                
+                print("Start calc")
+                
+                print(self.numGrams)
+                print(weight)
+                print(rConstant)
+                
+                print("End calc")
+                
+                self.bac = (self.numGrams / (weight * rConstant)) * 100
+                print("in bac")
+                print(self.bac)
+          
+                let bacSet = self.username + "/bloodAlcForDay"
+                self.fire.child(bacSet).setValue(self.bac)
+               
+                self.BAC.text = String(Double(Int(self.bac * 100)) / 100.0) + " % ."
+
+                
+                let currentBAC = self.bac
+                
+                print(currentBAC)
+                if (currentBAC != 0.0) {
+                    self.state.textColor = UIColor.green
+                    if (currentBAC < 0.08) {
+                        self.state.textColor = UIColor.yellow
+                        self.state.text = "Legally Intoxicated ."
+                    } else if (currentBAC < 0.40) {
+                        self.state.textColor = UIColor.purple
+                        self.state.text = "Impaired ."
+                    } else {
+                        self.state.textColor = UIColor.red
+                        self.state.text = "Serious Complications ."
+                    }
+                }
+                
+                let status = self.username + "/state"
+                self.fire.child(status).setValue(self.state.text)
+                
             }
             
-            let status = self.username + "/state"
-            self.fire.child(status).setValue(self.state.text)
-            
+            numberShots = 0
+            numberCups = 0
+            cupCounter.text = "0 cups"
+            shotCounter.text = "0 shots"
+            cupView.animationImages = nil
+            shotView.animationImages = nil
         }
-        
-        numberShots = 0
-        numberCups = 0
-        cupCounter.text = "0 cups"
-        shotCounter.text = "0 shots"
-        cupView.animationImages = nil
-        shotView.animationImages = nil
-        
         }
 
 
@@ -669,16 +675,21 @@ class homeController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
             
             print("in update labels")
             print(currentBAC)
-            self.BAC.text = String(currentBAC)
+            self.BAC.text =  String(Double(Int(currentBAC * 100)) / 100.0) + " % ."
+            
             
             print(currentBAC)
             if (currentBAC != 0.0) {
+                self.state.textColor = UIColor.green
                 if (currentBAC < 0.08) {
-                    self.state.text = "Legally Intoxicated"
+                    self.state.textColor = UIColor.yellow
+                    self.state.text = "Legally Intoxicated ."
                 } else if (currentBAC < 0.40) {
-                    self.state.text = "Very Impaired"
+                    self.state.textColor = UIColor.purple
+                    self.state.text = "Impaired  ."
                 } else {
-                    self.state.text = "Serious Complications"
+                    self.state.textColor = UIColor.red
+                    self.state.text = "Serious Complications  ."
                 }
             }
             

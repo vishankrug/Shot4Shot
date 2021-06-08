@@ -25,7 +25,7 @@ class HistoryViewController: UIViewController, ChartViewDelegate, UITableViewDat
     let dropdown = DropDown()
     
     var drinkName:[String] = []
-    var count:[Int] = []
+    var count:[Double] = []
     
     weak var axisFormatDelegate: IAxisValueFormatter?
     var full_date: [String] = []
@@ -74,10 +74,12 @@ class HistoryViewController: UIViewController, ChartViewDelegate, UITableViewDat
             for key in Array(initial_date.keys).sorted(by: <){
 
                 guard let check = initial_date[key] as? [String: Any] else {return}
-                var convert = 0
+                var convert = 0.0
 
                 for value in check.values{
-                    convert = convert + (value as! Int)
+                    print("in history")
+                    print(value)
+                    convert = convert + (value as! Double)
                     
                 }
                 self.full_date.append(key)
@@ -88,7 +90,7 @@ class HistoryViewController: UIViewController, ChartViewDelegate, UITableViewDat
             var lastDrank = self.full_date[latestDate]
             //print(latestDate)
 
-            var settingTable = initial_date[lastDrank] as! [String:Int]
+            var settingTable = initial_date[lastDrank] as! [String:Double]
             self.drinkName.append(contentsOf: settingTable.keys)
             self.count.append(contentsOf: settingTable.values)
 
@@ -106,7 +108,7 @@ class HistoryViewController: UIViewController, ChartViewDelegate, UITableViewDat
                 buttonTitle.setTitle(dateArray[index], for: UIControl.State())
                 selectedDate = dateArray[index]
                 
-                var dateArray = initial_date[self.selectedDate] as! [String: Int]
+                var dateArray = initial_date[self.selectedDate] as! [String: Double]
                 
                 self.drinkName.append(contentsOf: dateArray.keys)
                 self.count.append(contentsOf: dateArray.values)
@@ -115,8 +117,8 @@ class HistoryViewController: UIViewController, ChartViewDelegate, UITableViewDat
                 //print(self.count)
             }
            
-            let lastDrankCount = initial_date[lastDrank] as! [String: Int]
-            var countLatestDrink = 0
+            let lastDrankCount = initial_date[lastDrank] as! [String: Double]
+            var countLatestDrink = 0.0
             for x in lastDrankCount.values{
                 countLatestDrink = x + countLatestDrink
             }
