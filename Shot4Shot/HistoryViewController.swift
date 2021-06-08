@@ -33,22 +33,7 @@ class HistoryViewController: UIViewController, ChartViewDelegate, UITableViewDat
     var barChart = BarChartView()
     
     var json: [String: Any] = [:]
-        /*
-        [
-                                "username": "vishankrug",
-                                "fname": "Vishank",
-                                "lname": "Rughwani",
-                                "birthday": "06-01-2000",
-                                "sex": "male",
-                                "height": 6.0,
-                                "weight": 188,
-                                "emergencyContact": "2067790600",
-                                "numberOfDrinksAllowed": 10,
-        "history": ["06-01-2021": ["vodka": 12, "whiskey": 3], "06-02-2021": ["jager": 10, "vodka": 3, "rum": 1], "06-03-2021": ["vodka": 2, "whiskey": 1]],
-                                "bloodAlcForDay": 0.05
-                            ]
- 
- */
+    
 
     var dateArray:[String] = []
     
@@ -58,17 +43,16 @@ class HistoryViewController: UIViewController, ChartViewDelegate, UITableViewDat
     override func viewWillAppear(_ animated: Bool) {
         
 
-        
+ 
         fire.child(currentUserUID).observeSingleEvent(of: .value)
         { [self] (snapshot) in
             //this gets the current user
-            self.full_date = []
-            self.drinkName = []
-            self.count = []
+            self.full_date.removeAll()
+            self.drinkName.removeAll()
+            self.count.removeAll()
+            self.drinks.removeAll()
             
             let data = (snapshot.value as? [String: Any])!
-            //print("This is saurav's data")
-            //print(data)
             self.json = data
             
             
@@ -140,15 +124,25 @@ class HistoryViewController: UIViewController, ChartViewDelegate, UITableViewDat
             let limitDrink = self.json["numberOfDrinksAllowed"] as! Int
             //print(limitDrink)
             
-            self.drinkLimit.text = String(countLatestDrink) + " Drinks out of \n" + String(limitDrink)
+            self.drinkLimit.text = String(countLatestDrink) + " Drinks out of \n" + String(limitDrink) + " Drink Limit"
             
             viewDidLayoutSubviews()
             
             self.tableView.reloadData()
-            //barChart.reloadInputViews()
+            
+            var bac = self.json["bloodAlcForDay"] as! Double
+            
+            if (bac != 0.0) {
+                if (bac < 0.08) {
+                    safety.text = "Legally Intoxicated"
+                } else if (bac < 0.40) {
+                    safety.text = "Very Impaired"
+                } else {
+                    safety.text = "Serious Complications"
                 }
-        //self.tableView.reloadData()
-        //viewDidLayoutSubviews()
+            }
+                }
+  
     }
     
     override func viewDidLoad() {
@@ -248,9 +242,12 @@ class HistoryViewController: UIViewController, ChartViewDelegate, UITableViewDat
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
-        
-        barChart.frame = CGRect(x: 20, y: 90, width: self.view.frame.size.width - 40, height: self.view.frame.size.width - 40)
+        print("I am in here")
+
+        barChart.frame = CGRect(x: 45, y: 220 , width: self.view.frame.size.width - 90, height: self.view.frame.size.width - 90)
         view.addSubview(barChart)
+    
+
         
         //guard let rec = self.json["history"] as? [String: Any] else {return}
 
@@ -262,6 +259,8 @@ class HistoryViewController: UIViewController, ChartViewDelegate, UITableViewDat
             let dataEntry = BarChartDataEntry(x: Double(i), y: Double(self.drinks[i]) , data: full_date as AnyObject?)
             jsonKeys.append(dataEntry)
         }
+        
+
         
         let set = BarChartDataSet(entries: jsonKeys, label: "Number of Drinks")
         
@@ -275,21 +274,10 @@ class HistoryViewController: UIViewController, ChartViewDelegate, UITableViewDat
         let data = BarChartData(dataSet: set)
         barChart.data = data
         
+        barChart.xAxis.granularityEnabled = true
+        barChart.xAxis.granularity = 1.0
         barChart.xAxis.valueFormatter = IndexAxisValueFormatter(values: full_date)
-        
-        /*
-        var bac = self.json["bloodAlcForDay"] as! Double
-        
-        if (bac != 0.0) {
-            if (bac < 0.08) {
-                safety.text = "Legally Intoxicated"
-            } else if (bac < 0.40) {
-                safety.text = "Very Impaired"
-            } else {
-                safety.text = "Serious Complications"
-            }
-        }
-        */
+    
         
     }
     
