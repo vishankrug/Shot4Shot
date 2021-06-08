@@ -26,12 +26,31 @@ class FriendsViewController: UIViewController, UITableViewDataSource, UITableVie
     override func viewDidLoad() {
         super.viewDidLoad()
         getData()
+        
+        self.tableView.addSubview(self.refreshControl)
         tableView.delegate = self
         tableView.dataSource = self
-
     }
     
+    @objc func handleRefresh(_ refreshControl: UIRefreshControl) {
+            getData()
+            refreshControl.endRefreshing()
+        }
+    
+    lazy var refreshControl: UIRefreshControl = {
+            let refreshControl = UIRefreshControl()
+            refreshControl.addTarget(self, action:
+                         #selector(FriendsViewController.handleRefresh(_:)),
+                                     for: UIControl.Event.valueChanged)
+            refreshControl.tintColor = UIColor.red
+            
+            return refreshControl
+        }()
+    
     private func getData() {
+        names = []
+        bac = []
+        address = []
         fire.observe(.childAdded, with: {
                 (snapshot) in
                     let data = (snapshot.value as? [String: Any])!
@@ -40,8 +59,7 @@ class FriendsViewController: UIViewController, UITableViewDataSource, UITableVie
                     self.fullUser.append(data)
                     
                     // generating full name
-                    NSLog((data["fname"] as? String)!)
-                            let fullName = ((data["fname"] as? String)!) + " " + ((data["lname"] as? String)!)
+                    let fullName = ((data["fname"] as? String)!) + " " + ((data["lname"] as? String)!)
                     self.names.append(fullName)
 
                             let stateLevel = (data["state"] as? String)!

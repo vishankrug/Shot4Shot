@@ -10,6 +10,7 @@ import FirebaseDatabase
 import FirebaseAuth
 import FirebaseUI
 
+var objprofileController = ProfileViewController()
 //class userInfo {
 //    var firstName : String
 //    var lastName : String
@@ -269,6 +270,17 @@ class ProfileEditViewController: UIViewController {
         fire.child(USER + "/number").setValue(number)
         
         fire.child(USER + "/numberOfDrinksAllowed").setValue(numDrinks)
+        
+//        delayWithSeconds(10) {
+//            objprofileController.getData()
+//        }
+        
+    }
+    
+    func delayWithSeconds(_ seconds: Double, completion: @escaping () -> ()) {
+        DispatchQueue.main.asyncAfter(deadline: .now() + seconds) {
+            completion()
+        }
     }
     
     override func didReceiveMemoryWarning() {
@@ -279,7 +291,6 @@ class ProfileEditViewController: UIViewController {
 
 extension ProfileEditViewController: UIPickerViewDelegate, UIPickerViewDataSource {
     func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
-        print(pickerView.tag)
         switch pickerView.tag {
         case 1: // for sex picker
             return sexData[row]
