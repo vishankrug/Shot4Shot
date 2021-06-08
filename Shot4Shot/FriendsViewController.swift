@@ -35,7 +35,7 @@ class FriendsViewController: UIViewController, UITableViewDataSource, UITableVie
         fire.observe(.childAdded, with: {
                 (snapshot) in
                     let data = (snapshot.value as? [String: Any])!
-                    print(data)
+                    //print(data)
             
                     self.fullUser.append(data)
                     
@@ -56,7 +56,7 @@ class FriendsViewController: UIViewController, UITableViewDataSource, UITableVie
     
     // number of rows in table view
         func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-            print(self.names.count)
+            //print(self.names.count)
             return self.names.count
         }
         
@@ -76,7 +76,7 @@ class FriendsViewController: UIViewController, UITableViewDataSource, UITableVie
         
         // method to run when table view cell is tapped
         func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-            print("You tapped cell number \(indexPath.row).")
+           // print("You tapped cell number \(indexPath.row).")
         }
 
 }

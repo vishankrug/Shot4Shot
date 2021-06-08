@@ -296,7 +296,7 @@ class homeController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
 //            print(history)
             var sortedHistory = Array(history.keys).sorted(by: <)
             self.latestDate = sortedHistory[sortedHistory.count - 1] as! String
-            print(self.latestDate)
+            //print(self.latestDate)
             var currDates = history[self.latestDate] as! [String: Double] //this is hardcoded
 //            print(currDates)
 //            print("this is how it is")

@@ -60,7 +60,7 @@ class HistoryViewController: UIViewController, ChartViewDelegate, UITableViewDat
         super.viewDidLoad()
 
         //self.reloadInputViews()
-        print("am i here")
+        //print("am i here")
         fire.child(currentUserUID).observeSingleEvent(of: .value)
         { [self] (snapshot) in
             //this gets the current user
@@ -100,7 +100,7 @@ class HistoryViewController: UIViewController, ChartViewDelegate, UITableViewDat
             }
             var latestDate = sortDate.count - 1
             var lastDrank = self.full_date[latestDate]
-            print(latestDate)
+            //print(latestDate)
 
             var settingTable = initial_date[lastDrank] as! [String:Int]
             self.drinkName.append(contentsOf: settingTable.keys)
@@ -125,8 +125,8 @@ class HistoryViewController: UIViewController, ChartViewDelegate, UITableViewDat
                 self.drinkName.append(contentsOf: dateArray.keys)
                 self.count.append(contentsOf: dateArray.values)
                 self.tableView.reloadData()
-                print(self.drinkName)
-                print(self.count)
+                ///print(self.drinkName)
+                //print(self.count)
             }
            
             let lastDrankCount = initial_date[lastDrank] as! [String: Int]
