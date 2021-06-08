@@ -14,7 +14,9 @@ var currentUserUID = ""
 let fire = Database.database().reference()
 class ViewController: UIViewController {
     
-
+    @IBOutlet weak var loginButton: UIButton!
+    @IBOutlet weak var signUpButton: UIButton!
+    
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
               
               if segue.identifier == "SegueToTabBar" {

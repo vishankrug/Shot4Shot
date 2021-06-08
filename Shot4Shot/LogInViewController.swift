@@ -45,16 +45,21 @@ class LogInViewController: UIViewController {
                     if((data?.keys.contains(currDate)) == false){
                         fire.child(currentUserUID+"/bloodAlcForDay").setValue(0.0)
                         fire.child(currentUserUID+"/state").setValue("Sober")
-                        let newHist = [currDate: [
-                                        "vodka": 0,
-                                        "wine": 0,
-                                        "beer": 0,
-                                        "malt-liquor": 0,
-                                        "rum": 0,
-                                        "gin": 0,
-                                        "tequila": 0]
-                        ]
-//                        fire.child(currentUserUID+"/history").setValue()
+                        var newHist: [String: Any] = [:]
+                        for key in data!.keys{
+                            newHist[key] = data![key]
+                        }
+                        
+                        newHist[currDate] = ["vodka": 0,
+                                            "wine": 0,
+                                            "beer": 0,
+                                            "malt-liquor": 0,
+                                            "rum": 0,
+                                            "gin": 0,
+                                            "tequila": 0
+                                            ]
+                                
+                        fire.child(currentUserUID+"/history").setValue(newHist)
                         
                     }
                 }
