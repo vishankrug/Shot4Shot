@@ -84,7 +84,7 @@ class HistoryViewController: UIViewController, ChartViewDelegate, UITableViewDat
             //gets the history from the user
             guard let initial_date = self.json["history"] as? [String: Any] else {return}
             
-            print(" is this sorted")
+            //print(" is this sorted")
             var sortDate = Array(initial_date.keys).sorted(by: <)
             //goes through the history dates and gets the total drinks drank
             for key in Array(initial_date.keys).sorted(by: <){

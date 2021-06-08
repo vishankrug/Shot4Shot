@@ -9,7 +9,7 @@ import UIKit
 import FirebaseAuth
 import FirebaseDatabase
 
-class SignUpViewController: UIViewController {
+class SignUpViewController: UIViewController, UITextFieldDelegate {
 
     @IBOutlet weak var firstNameTextField: UITextField!
     @IBOutlet weak var lastNameTextField: UITextField!
@@ -26,16 +26,50 @@ class SignUpViewController: UIViewController {
     @IBOutlet weak var signUpButton: UIButton!
     @IBOutlet weak var errorLabel: UILabel!
     @IBOutlet weak var phoneNumberTextField: UITextField!
+    @IBOutlet weak var scrollView: UIScrollView!
     
     let fire = Database.database().reference()
     
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        self.firstNameTextField.delegate = self
+        self.lastNameTextField.delegate = self
+        self.emailTextField.delegate = self
+        self.birthdayTextField.delegate = self
+        self.addressTextField.delegate = self
+        self.passwordTextField.delegate = self
+        self.sexTextField.delegate = self
+        self.weightTextField.delegate = self
+        self.heightTextField.delegate = self
+        self.usernameTextField.delegate = self
+        self.emergencyContactTextField.delegate = self
+        self.numberOfDrinksTextField.delegate = self
+        self.phoneNumberTextField.delegate = self
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardAppear), name: UIResponder.keyboardWillShowNotification, object: nil)
+        
+//        NotificationCenter.default.addObserver(self, selector: #selector(keyboardDisappear), name: UIResponder.keyboardWillHideNotification, object: nil)
 
         // Do any additional setup after loading the view.
     }
+    var isExpand : Bool = false
+    @objc func keyboardAppear(){
+        if !isExpand{
+            self.scrollView.contentSize = CGSize(width: self.view.frame.width, height: self.scrollView.frame.height + 400)
+            self.isExpand = true
+        }
+    }
     
+//    @objc func keyboardDisappear(){
+//        if isExpand{
+//            self.scrollView.contentSize = CGSize(width: self.view.frame.width, height: self.scrollView.frame.height - 400)
+//            self.isExpand = false
+//
+//        }
+//    }
+//    
     
     func isPasswordValid(_ password: String) -> Bool {
         let passwordTest = NSPredicate(format: "SELF MATCHES %@", "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[d$@$!%*?&#])[A-Za-z\\dd$@$!%*?&#]{8,}")
@@ -137,5 +171,20 @@ class SignUpViewController: UIViewController {
         errorLabel.alpha = 1
     }
     
-
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        firstNameTextField.resignFirstResponder()
+        lastNameTextField.resignFirstResponder()
+        emailTextField.resignFirstResponder()
+        birthdayTextField.resignFirstResponder()
+        addressTextField.resignFirstResponder()
+        passwordTextField.resignFirstResponder()
+        sexTextField.resignFirstResponder()
+        weightTextField.resignFirstResponder()
+        heightTextField.resignFirstResponder()
+        usernameTextField.resignFirstResponder()
+        emergencyContactTextField.resignFirstResponder()
+        numberOfDrinksTextField.resignFirstResponder()
+        phoneNumberTextField.resignFirstResponder()
+        return (true)
+    }
 }
