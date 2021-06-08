@@ -54,11 +54,108 @@ class HistoryViewController: UIViewController, ChartViewDelegate, UITableViewDat
     
     let fire = Database.database().reference()
 
+
+    override func viewWillAppear(_ animated: Bool) {
+        
+
+        
+        fire.child(currentUserUID).observeSingleEvent(of: .value)
+        { [self] (snapshot) in
+            //this gets the current user
+            self.full_date = []
+            self.drinkName = []
+            self.count = []
+            
+            let data = (snapshot.value as? [String: Any])!
+            //print("This is saurav's data")
+            //print(data)
+            self.json = data
+            
+            
+            // Do any additional setup after loading the view.
+            tableView.dataSource = self
+            tableView.delegate = self
+            tableView.tableFooterView = UIView()
+            axisFormatDelegate = self
+
+            //getting the barChart prepped
+            barChart.delegate = self
+            
+            //gets the history from the user
+            guard let initial_date = self.json["history"] as? [String: Any] else {return}
+            
+            print(" is this sorted")
+            var sortDate = Array(initial_date.keys).sorted(by: <)
+            //goes through the history dates and gets the total drinks drank
+            for key in Array(initial_date.keys).sorted(by: <){
+
+                guard let check = initial_date[key] as? [String: Any] else {return}
+                var convert = 0
+
+                for value in check.values{
+                    convert = convert + (value as! Int)
+                    
+                }
+                self.full_date.append(key)
+                drinks.append(Double(convert))
+                        
+            }
+            var latestDate = sortDate.count - 1
+            var lastDrank = self.full_date[latestDate]
+            //print(latestDate)
+
+            var settingTable = initial_date[lastDrank] as! [String:Int]
+            self.drinkName.append(contentsOf: settingTable.keys)
+            self.count.append(contentsOf: settingTable.values)
+
+            
+            dropdown.anchorView = vwDropDopwn
+            self.dateArray = self.full_date
+            dropdown.dataSource = dateArray
+            
+            buttonTitle.setTitle(dateArray[dateArray.count - 1], for: UIControl.State())
+            
+            dropdown.selectionAction = { [unowned self] (index: Int, item: String) in
+                //buttonTitle.setTitle("dateArray[index]", for: UIControl.State())
+                self.drinkName.removeAll()
+                self.count.removeAll()
+                buttonTitle.setTitle(dateArray[index], for: UIControl.State())
+                selectedDate = dateArray[index]
+                
+                var dateArray = initial_date[self.selectedDate] as! [String: Int]
+                
+                self.drinkName.append(contentsOf: dateArray.keys)
+                self.count.append(contentsOf: dateArray.values)
+                self.tableView.reloadData()
+                ///print(self.drinkName)
+                //print(self.count)
+            }
+           
+            let lastDrankCount = initial_date[lastDrank] as! [String: Int]
+            var countLatestDrink = 0
+            for x in lastDrankCount.values{
+                countLatestDrink = x + countLatestDrink
+            }
+        
+            let limitDrink = self.json["numberOfDrinksAllowed"] as! Int
+            //print(limitDrink)
+            
+            self.drinkLimit.text = String(countLatestDrink) + " Drinks out of \n" + String(limitDrink)
+            
+            viewDidLayoutSubviews()
+            
+            self.tableView.reloadData()
+            //barChart.reloadInputViews()
+                }
+        //self.tableView.reloadData()
+        //viewDidLayoutSubviews()
+    }
     
     override func viewDidLoad() {
     
         super.viewDidLoad()
 
+        /*
         //self.reloadInputViews()
         //print("am i here")
         fire.child(currentUserUID).observeSingleEvent(of: .value)
@@ -145,7 +242,7 @@ class HistoryViewController: UIViewController, ChartViewDelegate, UITableViewDat
                 }
 
         
-
+            */
         
     }
     

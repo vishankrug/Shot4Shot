@@ -119,12 +119,19 @@ class homeController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
             if (numberCups != 0) {
                 numberCups = numberCups - 1
                 displayCups()
+                if(numberCups < 1) {
+                    cupView.animationImages = nil
+                }
             }
         } else {
             if (numberShots != 0) {
                 numberShots = numberShots - 1
                 displayShots()
+                if (numberShots < 1) {
+                    shotView.animationImages = nil
+                }
             }
+               
         }
     }
     
@@ -164,6 +171,7 @@ class homeController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
     
     // Shows how many shots are selected
     func displayShots() {
+        print(alcohol)
         var imagesListArray = [UIImage]()
         shotCounter.text = String(numberShots) + " shots"
         
@@ -207,6 +215,13 @@ class homeController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
     
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
 
+        numberShots = 0
+        numberCups = 0
+        cupCounter.text = "0 cups"
+        shotCounter.text = "0 shots"
+        cupView.animationImages = nil
+        shotView.animationImages = nil
+        
         self.valueSelected = list[row] as! String
         self.valueSelected = self.valueSelected.lowercased()
         //print(self.valueSelected.lowercased())
@@ -216,12 +231,14 @@ class homeController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
     
     // Updates all variables when save drinks is clicked
     @IBAction func saveDrinks(_ sender: Any) {
-        currentDate()
-        sendData()
-        convertGrams()
-        calcBAC()
-        updateLabels()
-        resetInfo()
+        everyFuckingThing()
+//        currentDate()
+//        sendData()
+//        convertGrams()
+//        calcBAC()
+//
+//        updateLabels()
+//        resetInfo()
     }
     
     
@@ -231,6 +248,199 @@ class homeController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
         dateFormatter.dateFormat = "MM-dd-yyyy"
         currDate = dateFormatter.string(from: date)
     }
+    
+    func everyFuckingThing() {
+        var standardDrinks = 0.0
+        let shotOunces = 1.5
+        let cupOunces = 12.0
+        var temp = 0.0
+        
+
+        let numberOunces = ((shotOunces * Double(numberShots)) + (cupOunces * Double(numberCups)))
+
+      
+        
+        var drinkOz = alcohol[0]["standardDrinkoz"] as! Double
+        
+        if (valueSelected == "beer") {
+            print("in send data")
+            var drinkOz = alcohol[2]["standardDrinkoz"] as! Double
+            standardDrinks = numberOunces / drinkOz
+            print(standardDrinks)
+            
+        } else if (valueSelected == "wine") {
+            
+            var drinkOz = alcohol[0]["standardDrinkoz"] as! Double
+            standardDrinks = numberOunces / drinkOz
+            
+        } else if (valueSelected == "vodka") {
+            
+            var drinkOz = alcohol[1]["standardDrinkoz"] as! Double
+            standardDrinks = numberOunces / drinkOz
+            
+        } else if (valueSelected == "malt-liquor") {
+            
+            var drinkOz = alcohol[3]["standardDrinkoz"] as! Double
+            standardDrinks = numberOunces / drinkOz
+            
+        } else if (valueSelected == "rum") {
+            
+            var drinkOz = alcohol[4]["standardDrinkoz"] as! Double
+            standardDrinks = numberOunces / drinkOz
+            
+        } else if (valueSelected == "gin") {
+            
+            var drinkOz = alcohol[5]["standardDrinkoz"] as! Double
+            standardDrinks = numberOunces / drinkOz
+            
+        } else if (valueSelected == "tequila") {
+            
+            var drinkOz = alcohol[6]["standardDrinkoz"] as! Double
+            standardDrinks = numberOunces / drinkOz
+            
+        }
+ 
+        var newHistory = [String: Any]()
+        
+        fire.child(username).observeSingleEvent(of: .value)
+                { (snapshot) in
+                    let data = (snapshot.value as? [String: Any])!
+
+            var history = data["history"] as! [String: Any]
+            var sortedHistory = Array(history.keys).sorted(by: <)
+            self.latestDate = sortedHistory[sortedHistory.count - 1] as! String
+            var currDates = history[self.latestDate] as! [String: Double] //this is hardcoded
+
+            
+             
+            temp = Double(currDates[self.valueSelected]!)
+            temp = Double(temp) + standardDrinks
+            
+            currDates[self.valueSelected] = temp
+
+            history[self.latestDate]  = currDates
+           
+       
+            newHistory = history
+           
+            let historyName = self.username + "/history"
+            self.fire.child(historyName).setValue(newHistory)
+
+            history = history[self.latestDate] as! [String : Any]
+            for x in history.keys {
+                var hist = x as! String
+                print(history[hist])
+                var historyDouble = Double(history[hist] as! Double)
+                print("test test")
+                print(history)
+                if (hist == "beer") {
+                    
+                    
+                    var standardDouble = self.alcohol[2]["standardDrinkgrams"] as! Double
+                    
+                    print(standardDouble)
+                    print(historyDouble)
+                    print("end test end test")
+                    self.numGrams = self.numGrams + standardDouble * historyDouble
+                    
+                } else if (hist == "wine") {
+                    
+                    var standardDouble = self.alcohol[0]["standardDrinkgrams"] as! Double
+                    self.numGrams = self.numGrams + (standardDouble) * historyDouble
+                    
+                } else if (hist == "vodka") {
+                    
+                    var standardDouble = self.alcohol[1]["standardDrinkgrams"] as! Double
+                    print(standardDouble)
+                    self.numGrams = self.numGrams + (standardDouble) * historyDouble
+                    print(self.numGrams)
+                } else if (hist == "malt-liquor") {
+                    
+                    var standardDouble = self.alcohol[3]["standardDrinkgrams"] as! Double
+                    
+                    self.numGrams = self.numGrams + (standardDouble) * historyDouble
+                    
+                } else if (hist == "rum") {
+                    
+                    var standardDouble = self.alcohol[4]["standardDrinkgrams"] as! Double
+
+                    self.numGrams = self.numGrams + (standardDouble) * historyDouble
+                    
+                } else if (hist == "gin") {
+                    
+                    var standardDouble = self.alcohol[5]["standardDrinkgrams"] as! Double
+
+                    self.numGrams = self.numGrams + (standardDouble) * historyDouble
+                    
+                } else if (hist == "tequila") { //this is meant to be tequilla
+                    
+                    var standardDouble = self.alcohol[6]["standardDrinkgrams"] as! Double
+                    self.numGrams = self.numGrams + (standardDouble) * historyDouble
+                    
+                }
+                
+            }
+            
+            var sex = ""
+            var weight = 0.0
+            var rConstant = 0.0
+
+            sex = data["sex"] as! String
+            weight = data["weight"] as! Double
+            weight = weight * 453.592
+
+            if (sex == "female") {
+                rConstant = 0.55
+            } else {
+                rConstant = 0.68
+            }
+            
+            print("Start calc")
+            
+            print(self.numGrams)
+            print(weight)
+            print(rConstant)
+            
+            print("End calc")
+            
+            self.bac = (self.numGrams / (weight * rConstant)) * 100
+            print("in bac")
+            print(self.bac)
+      
+            let bacSet = self.username + "/bloodAlcForDay"
+            self.fire.child(bacSet).setValue(self.bac)
+           
+            self.BAC.text = String((self.bac * 100).rounded() / 100)
+            
+            let currentBAC = self.bac
+            
+            print(currentBAC)
+            if (currentBAC != 0.0) {
+                if (currentBAC < 0.08) {
+                    self.state.text = "Legally Intoxicated"
+                } else if (currentBAC < 0.40) {
+                    self.state.text = "Very Impaired"
+                } else {
+                    self.state.text = "Serious Complications"
+                }
+            }
+            
+            let status = self.username + "/state"
+            self.fire.child(status).setValue(self.state.text)
+            
+        }
+        
+        numberShots = 0
+        numberCups = 0
+        cupCounter.text = "0 cups"
+        shotCounter.text = "0 shots"
+        cupView.animationImages = nil
+        shotView.animationImages = nil
+        
+        }
+
+
+    
     
     func sendData() {
         var standardDrinks = 0.0
@@ -250,9 +460,10 @@ class homeController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
         //finds out the standard drinks
         
         if (valueSelected == "beer") {
-         
+            print("in send data")
             var drinkOz = alcohol[2]["standardDrinkoz"] as! Double
             standardDrinks = numberOunces / drinkOz
+            print(standardDrinks)
             
         } else if (valueSelected == "wine") {
             
@@ -311,16 +522,20 @@ class homeController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
             currDates[self.valueSelected] = temp
 
             history[self.latestDate]  = currDates
+           
+            print(history)
+            print("end send data")
             newHistory = history
            
-        }
-
-        fire.child(username).observeSingleEvent(of: .value)
-        { [self] (snapshot) in
-            let data = (snapshot.value as? [String: Any])!
-            let historyName = username + "/history"
+            let historyName = self.username + "/history"
             self.fire.child(historyName).setValue(newHistory)
         }
+
+//        fire.child(username).observeSingleEvent(of: .value)
+//        { [self] (snapshot) in
+//            let data = (snapshot.value as? [String: Any])!
+//
+//        }
 
     }
     
@@ -329,25 +544,26 @@ class homeController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
         
         fire.child(username).observeSingleEvent(of: .value)
         { [self] (snapshot) in
+            var numGrams = 0.0
             let data = (snapshot.value as? [String: Any])!
-
             var history = data["history"] as! [String: Any]
-            
-            history = history[self.latestDate] as! [String: Int] //data is hardcoded here
+            history = history[self.latestDate] as! [String: Any] //data is hardcoded here
 
             
             for x in history.keys {
                 var hist = x as! String
-                //print(self.numGrams)
-                //print(Double(history[hist] as! Int))
-                //print(self.alcohol[2]["standardDrinkgrams"] as! Double)
                 
-                var historyDouble = Double(history[hist] as! Int)
-                
+                var historyDouble = Double(history[hist] as! Double)
+                print("test test")
+                print(history)
                 if (hist == "beer") {
                     
                     
                     var standardDouble = self.alcohol[2]["standardDrinkgrams"] as! Double
+                    
+                    print(standardDouble)
+                    print(historyDouble)
+                    print("end test end test")
                     self.numGrams = self.numGrams + standardDouble * historyDouble
                     
                 } else if (hist == "wine") {
@@ -356,15 +572,16 @@ class homeController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
                     self.numGrams = self.numGrams + (standardDouble) * historyDouble
                     
                 } else if (hist == "vodka") {
-                    print(self.alcohol[1]["standardDrinkgrams"])
-                    var standardDouble = self.alcohol[1]["standardDrinkgrams"] as! Double
-                    self.numGrams = self.numGrams + (standardDouble) * historyDouble
                     
+                    var standardDouble = self.alcohol[1]["standardDrinkgrams"] as! Double
+                    print(standardDouble)
+                    self.numGrams = self.numGrams + (standardDouble) * historyDouble
+                    print(self.numGrams)
                 } else if (hist == "malt-liquor") {
                     
                     var standardDouble = self.alcohol[3]["standardDrinkgrams"] as! Double
                     
-                    numGrams = numGrams + (standardDouble) * historyDouble
+                    self.numGrams = self.numGrams + (standardDouble) * historyDouble
                     
                 } else if (hist == "rum") {
                     
@@ -398,8 +615,6 @@ class homeController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
 
         fire.child(username).observeSingleEvent(of: .value)
         { (snapshot) in
-            //print("in BAC func")
-            //self.numGrams = 12.0 //this can be commented out as shit starts working!
             let data = snapshot.value as? [String: Any]
 
             sex = data?["sex"] as! String
@@ -412,38 +627,48 @@ class homeController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
                 rConstant = 0.68
             }
             
-            self.bac = (self.numGrams / (weight * rConstant)) * 100
+            print("Start calc")
             
-            //print(self.bac)
-
-
+            print(self.numGrams)
+            print(weight)
+            print(rConstant)
+            
+            print("End calc")
+            
+            self.bac = (self.numGrams / (weight * rConstant)) * 100
+            print("in bac")
+            print(self.bac)
+      
+            let bacSet = self.username + "/bloodAlcForDay"
+            self.fire.child(bacSet).setValue(self.bac)
+           
+            
            
         }
         
-        fire.child(username).observeSingleEvent(of: .value)
-        { (snapshot) in
-            print("in get func")
-          
-            let bacSet = self.username + "/bloodAlcForDay"
-            self.fire.child(bacSet).setValue(self.bac)
-            let data = snapshot.value as? [String: Any]
-
-            print(data)
-        }
+//        fire.child(username).observeSingleEvent(of: .value)
+//        { (snapshot) in
+//
+//
+//
+//
+//        }
 
     
     }
     
     
     func updateLabels() {
-        
-        
+
         fire.child(username).observeSingleEvent(of: .value)
         { [self] (snapshot) in
             
+            print("before")
             let data = (snapshot.value as? [String: Any])!
             let currentBAC = data["bloodAlcForDay"] as! Double
             
+            print("in update labels")
+            print(currentBAC)
             self.BAC.text = String(currentBAC)
             
             print(currentBAC)
@@ -456,10 +681,12 @@ class homeController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
                     self.state.text = "Serious Complications"
                 }
             }
+            
+            let status = username + "/state"
+            self.fire.child(status).setValue(self.state.text)
         }
         
-        let status = username + "/state"
-        self.fire.child(status).setValue(self.state.text)
+      
     }
     
     func resetInfo() {
@@ -480,13 +707,13 @@ class homeController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
         self.drinkOptions.delegate = self
         self.drinkOptions.dataSource = self
         
-        calcBAC()
+        //calcBAC()
         updateLabels()
         //var data: [String: Any] = [:]
         
      
             self.list = ["Vodka","Gin", "Tequila",
-                    "Beer","Whiskey","Rum", "Wine"]
+                    "Beer","Malt-liquor","Rum", "Wine"]
 
         
 //        if let localData = self.readLocalFile(forName: "BAC") {
