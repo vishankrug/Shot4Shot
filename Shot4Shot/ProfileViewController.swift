@@ -102,8 +102,8 @@ class ProfileViewController: UIViewController {
             imageView.image = UIImage(named: "dog")
         }
         
-        let height = String(height)
-        let heightSplit = height.components(separatedBy: ".")
+        let height_measure = String(height)
+        let heightSplit = height_measure.components(separatedBy: ".")
         heightLabel.text = heightSplit[0] + " ft " + heightSplit[1] + " in"
         
         weightLabel.text = String(weight)
